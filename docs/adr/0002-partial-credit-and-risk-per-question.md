@@ -1,4 +1,4 @@
-# ADR 0002: Score with partial credit and count risks per question
+# 0002. Score with partial credit and count risks per question
 
 ## Status
 

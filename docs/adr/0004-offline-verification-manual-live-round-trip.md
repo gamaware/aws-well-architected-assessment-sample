@@ -1,4 +1,4 @@
-# ADR 0004: Verify offline in CI and keep the Well-Architected Tool round trip manual
+# 0004. Verify offline in CI and keep the Well-Architected Tool round trip manual
 
 ## Status
 

@@ -1,4 +1,4 @@
-# ADR 0005: Render the PDF with the shared pandoc LaTeX image
+# 0005. Render the PDF with the shared pandoc LaTeX image
 
 ## Status
 

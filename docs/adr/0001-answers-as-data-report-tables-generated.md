@@ -1,4 +1,4 @@
-# ADR 0001: Record answers as data and generate the report tables from them
+# 0001. Record answers as data and generate the report tables from them
 
 ## Status
 

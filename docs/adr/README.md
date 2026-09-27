@@ -1,7 +1,6 @@
 # Architecture decision records
 
-Format: Fundamentals of Software Architecture, 2nd edition, chapter 21 (status, context, decision, consequences,
-compliance, notes).
+Architecture decision records follow the *Fundamentals of Software Architecture* (2nd ed.) format.
 
 | Number | Title | Status |
 | --- | --- | --- |

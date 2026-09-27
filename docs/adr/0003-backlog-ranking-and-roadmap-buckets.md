@@ -1,4 +1,4 @@
-# ADR 0003: Rank the backlog by risk and effort, and pull dependencies forward on the roadmap
+# 0003. Rank the backlog by risk and effort, and pull dependencies forward on the roadmap
 
 ## Status
 
