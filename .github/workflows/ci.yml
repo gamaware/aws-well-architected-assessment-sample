@@ -1,0 +1,74 @@
+name: ci
+
+# Thin caller: shared checks come from gamaware/.github; `make verify` is the same command contributors run locally.
+# No job receives cloud credentials or an id-token.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint-docs:
+    name: lint-docs
+    uses: gamaware/.github/.github/workflows/lint-docs.yml@main
+    permissions:
+      contents: read # checkout
+    with:
+      vale-paths: README.md CLAUDE.md CHANGELOG.md SECURITY.md docs report evidence .github
+      # This repository and its portfolio siblings are linked before they are public; other links are still checked.
+      lychee-args: >-
+        --no-progress --max-retries 3 --accept 200..=299,403,429
+        --exclude '^https://github\.com/gamaware/(aws-devops-portfolio|aws-well-architected-assessment-sample|\.github)' './**/*.md'
+
+  lint-actions:
+    name: lint-actions
+    uses: gamaware/.github/.github/workflows/lint-actions.yml@main
+    permissions:
+      contents: read # checkout
+
+  secrets:
+    name: secrets
+    uses: gamaware/.github/.github/workflows/secrets.yml@main
+    permissions:
+      contents: read # checkout
+
+  security:
+    name: security
+    uses: gamaware/.github/.github/workflows/security.yml@main
+    permissions:
+      contents: read # checkout
+
+  report:
+    name: report
+    uses: gamaware/.github/.github/workflows/report.yml@main
+    permissions:
+      contents: read # checkout
+    with:
+      evidence-command: python -m pip install --disable-pip-version-check "uv==0.12.19" && make evidence
+
+  verify:
+    name: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read # checkout
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.19"
+          enable-cache: false
+
+      - name: Run make verify
+        run: make verify

@@ -1,0 +1,8 @@
+# Shared reusable workflows from gamaware/.github are called by ref until a later pass pins them to a commit SHA
+# (see CHANGELOG, Unreleased). Every other action must stay pinned to a full commit SHA.
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        "gamaware/.github/*": ref-pin
+        "*": hash-pin
