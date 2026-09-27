@@ -20,6 +20,7 @@ live-output/
 *.sarif
 .DS_Store
 .claude-flow/
+.claude/proven-config*
 .claude/settings.local.json
 build/
 
