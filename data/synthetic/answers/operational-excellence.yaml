@@ -1,0 +1,164 @@
+pillar: operational-excellence
+name: Operational excellence
+lens: wellarchitected
+questions:
+  OPS04: How do you implement observability in your workload?
+  OPS05: How do you reduce defects, ease remediation, and improve flow into production?
+  OPS06: How do you mitigate deployment risks?
+  OPS07: How do you know that you are ready to support a workload?
+  OPS08: How do you utilize workload observability in your organization?
+  OPS10: How do you manage workload and operations events?
+  OPS11: How do you evolve operations?
+items:
+  - id: OPS04-BP01
+    question: OPS04
+    title: Identify key performance indicators
+    status: partial
+    risk: medium
+    effort: S
+    owner: Head of engineering
+    evidence: [EV-01, EV-09]
+    observation: >-
+      The team tracks conversion rate in the marketing tool but no operational KPI such as checkout success rate or
+      order latency. Dashboards show CPU and memory only.
+    recommendation: >-
+      Agree three KPIs with the business (checkout success rate, p95 checkout latency, orders sent to the logistics
+      partner within five minutes) and publish them on one CloudWatch dashboard.
+  - id: OPS05-BP01
+    question: OPS05
+    title: Use version control
+    status: met
+    evidence: [EV-04, EV-08]
+    observation: Application code, Terraform and pipeline definitions all live in GitHub with branch protection.
+  - id: OPS05-BP02
+    question: OPS05
+    title: Test and validate changes
+    status: partial
+    risk: medium
+    effort: M
+    owner: Backend engineers
+    evidence: [EV-04]
+    observation: >-
+      Unit tests run on pull requests for orders-api only. storefront-web and the fulfilment worker merge without
+      automated tests, and nothing tests database migrations before production.
+    recommendation: >-
+      Run unit tests for all three services on every pull request, and add a migration test that applies each
+      schema change to a copy of the staging database.
+  - id: OPS05-BP04
+    question: OPS05
+    title: Use build and deployment management systems
+    status: met
+    evidence: [EV-04]
+    observation: GitHub Actions builds and deploys every service; nobody builds images on a laptop.
+  - id: OPS05-BP10
+    question: OPS05
+    title: Fully automate integration and deployment
+    status: partial
+    risk: medium
+    effort: M
+    owner: Platform lead
+    depends_on: [OPS05-BP02]
+    evidence: [EV-04, EV-06]
+    observation: >-
+      Deployments to production need an engineer to run a workflow by hand and then run the database migration from
+      a laptop. The median lead time from merge to production is {delivery.median_lead_time_hours} hours.
+    recommendation: >-
+      Promote the same image from staging to production in one pipeline, run migrations as a pipeline step, and
+      keep the manual approval as the only human action.
+  - id: OPS06-BP01
+    question: OPS06
+    title: Plan for unsuccessful changes
+    status: not_met
+    risk: high
+    effort: S
+    owner: Platform lead
+    evidence: [EV-02, EV-06, EV-07]
+    observation: >-
+      No change has a written rollback plan. {delivery.rollbacks} of {delivery.deployments} deployments in the
+      window were rolled back by hand, and the longest incident, {incidents.longest_incident}, lasted
+      {incidents.longest_minutes_to_restore} minutes because its schema change could not be reversed.
+    recommendation: >-
+      Add a rollback section to the pull request template, require backward-compatible (expand and contract) schema
+      changes, and keep the previous task definition revision ready to redeploy.
+  - id: OPS06-BP03
+    question: OPS06
+    title: Employ safe deployment strategies
+    status: not_met
+    risk: medium
+    effort: M
+    owner: Platform lead
+    depends_on: [OPS06-BP04]
+    evidence: [EV-04, EV-13]
+    observation: ECS rolling updates replace all tasks at once with minimumHealthyPercent set to 0.
+    recommendation: >-
+      Use ECS blue/green deployments through CodeDeploy, or at least rolling updates with minimumHealthyPercent 100
+      and the deployment circuit breaker enabled.
+  - id: OPS06-BP04
+    question: OPS06
+    title: Automate testing and rollback
+    status: not_met
+    risk: high
+    effort: M
+    owner: Platform lead
+    depends_on: [OPS04-BP01]
+    evidence: [EV-04, EV-06]
+    observation: >-
+      Nothing checks a release after it ships. The {delivery.rollbacks} rollbacks in the window all started after a
+      customer or a staff member noticed the problem.
+    recommendation: >-
+      Enable the ECS deployment circuit breaker with rollback, and add a post-deploy smoke test and a CloudWatch
+      alarm on the checkout KPI that stops and reverts the deployment.
+  - id: OPS07-BP03
+    question: OPS07
+    title: Use runbooks to perform procedures
+    status: partial
+    risk: medium
+    effort: S
+    owner: Platform lead
+    evidence: [EV-02]
+    observation: >-
+      Two runbooks exist in a wiki (restart a service, rotate the logistics API token) and neither was used during
+      INC-105. Database failover and restore have no runbook.
+    recommendation: >-
+      Write runbooks for the five most frequent procedures, keep them next to the code, and link each alarm to its
+      runbook.
+  - id: OPS08-BP01
+    question: OPS08
+    title: Analyze workload metrics
+    status: partial
+    risk: low
+    effort: S
+    owner: Head of engineering
+    depends_on: [OPS04-BP01]
+    evidence: [EV-09]
+    observation: Metrics exist but nobody reviews them outside incidents.
+    recommendation: Hold a 30-minute weekly operations review of the KPI dashboard and the alarm history.
+  - id: OPS10-BP01
+    question: OPS10
+    title: Use a process for event, incident, and problem management
+    status: partial
+    risk: medium
+    effort: S
+    owner: Head of engineering
+    evidence: [EV-03, EV-07]
+    observation: >-
+      Incidents are handled in a chat channel with no severity definitions or incident lead. {incidents.customer_detected}
+      of {incidents.total} incidents in the window were first reported by customers.
+    recommendation: >-
+      Define three severity levels, an incident lead role and a status page update rule, and page the on-call
+      engineer from CloudWatch alarms.
+  - id: OPS11-BP02
+    question: OPS11
+    title: Perform post-incident analysis
+    status: partial
+    risk: medium
+    effort: S
+    owner: Head of engineering
+    depends_on: [OPS10-BP01]
+    evidence: [EV-07]
+    observation: >-
+      Only {incidents.postmortems} of {incidents.total} incidents have a written post-incident analysis, and their
+      actions are not tracked.
+    recommendation: >-
+      Write a blameless analysis for every SEV1 and SEV2 incident within five working days and track its actions in
+      the team backlog.

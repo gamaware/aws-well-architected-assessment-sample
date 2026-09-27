@@ -1,0 +1,25 @@
+{
+  "access_keys": {
+    "active_keys": 3,
+    "active_over_90_days": 3,
+    "console_users_without_mfa": 1,
+    "oldest_age_days": 806
+  },
+  "delivery": {
+    "change_failure_rate_pct": 10.6,
+    "deployments": 47,
+    "deploys_per_week": 3.7,
+    "failed": 2,
+    "median_lead_time_hours": 67.9,
+    "rollbacks": 3
+  },
+  "incidents": {
+    "customer_detected": 3,
+    "longest_incident": "INC-106",
+    "longest_minutes_to_restore": 185,
+    "median_minutes_to_detect": 30,
+    "median_minutes_to_restore": 70,
+    "postmortems": 2,
+    "total": 7
+  }
+}

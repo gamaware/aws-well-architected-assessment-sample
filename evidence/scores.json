@@ -1,0 +1,190 @@
+{
+  "devops": {
+    "best_practices": 13,
+    "gaps": 11,
+    "gaps_by_risk": {
+      "high": 1,
+      "low": 2,
+      "medium": 8
+    },
+    "hri": 1,
+    "mri": 6,
+    "questions": 9,
+    "score_pct": 38
+  },
+  "framework": {
+    "best_practices": 41,
+    "gaps": 34,
+    "gaps_by_risk": {
+      "high": 8,
+      "low": 9,
+      "medium": 17
+    },
+    "hri": 7,
+    "mri": 13,
+    "questions": 32,
+    "score_pct": 39
+  },
+  "pillars": [
+    {
+      "applicable": 12,
+      "hri": 1,
+      "key": "operational-excellence",
+      "lens": "wellarchitected",
+      "maturity_level": 2,
+      "maturity_name": "Repeatable",
+      "met": 2,
+      "mri": 5,
+      "name": "Operational excellence",
+      "not_applicable": 0,
+      "not_met": 3,
+      "partial": 7,
+      "question_risk": {
+        "OPS04": "medium",
+        "OPS05": "medium",
+        "OPS06": "high",
+        "OPS07": "medium",
+        "OPS08": "none",
+        "OPS10": "medium",
+        "OPS11": "medium"
+      },
+      "score_pct": 46
+    },
+    {
+      "applicable": 9,
+      "hri": 2,
+      "key": "security",
+      "lens": "wellarchitected",
+      "maturity_level": 1,
+      "maturity_name": "Initial",
+      "met": 2,
+      "mri": 4,
+      "name": "Security",
+      "not_applicable": 0,
+      "not_met": 4,
+      "partial": 3,
+      "question_risk": {
+        "SEC01": "none",
+        "SEC02": "high",
+        "SEC03": "high",
+        "SEC04": "medium",
+        "SEC06": "medium",
+        "SEC08": "none",
+        "SEC10": "medium",
+        "SEC11": "medium"
+      },
+      "score_pct": 39
+    },
+    {
+      "applicable": 8,
+      "hri": 4,
+      "key": "reliability",
+      "lens": "wellarchitected",
+      "maturity_level": 1,
+      "maturity_name": "Initial",
+      "met": 1,
+      "mri": 1,
+      "name": "Reliability",
+      "not_applicable": 0,
+      "not_met": 4,
+      "partial": 3,
+      "question_risk": {
+        "REL06": "high",
+        "REL07": "medium",
+        "REL09": "high",
+        "REL10": "high",
+        "REL12": "none",
+        "REL13": "high"
+      },
+      "score_pct": 31
+    },
+    {
+      "applicable": 4,
+      "hri": 0,
+      "key": "performance-efficiency",
+      "lens": "wellarchitected",
+      "maturity_level": 1,
+      "maturity_name": "Initial",
+      "met": 1,
+      "mri": 1,
+      "name": "Performance efficiency",
+      "not_applicable": 0,
+      "not_met": 2,
+      "partial": 1,
+      "question_risk": {
+        "PERF01": "none",
+        "PERF02": "none",
+        "PERF05": "medium"
+      },
+      "score_pct": 38
+    },
+    {
+      "applicable": 5,
+      "hri": 0,
+      "key": "cost-optimization",
+      "lens": "wellarchitected",
+      "maturity_level": 1,
+      "maturity_name": "Initial",
+      "met": 0,
+      "mri": 2,
+      "name": "Cost optimization",
+      "not_applicable": 0,
+      "not_met": 2,
+      "partial": 3,
+      "question_risk": {
+        "COST02": "none",
+        "COST03": "medium",
+        "COST04": "none",
+        "COST06": "medium",
+        "COST07": "none"
+      },
+      "score_pct": 30
+    },
+    {
+      "applicable": 3,
+      "hri": 0,
+      "key": "sustainability",
+      "lens": "wellarchitected",
+      "maturity_level": 2,
+      "maturity_name": "Repeatable",
+      "met": 1,
+      "mri": 0,
+      "name": "Sustainability",
+      "not_applicable": 0,
+      "not_met": 1,
+      "partial": 1,
+      "question_risk": {
+        "SUS02": "none",
+        "SUS04": "none",
+        "SUS05": "none"
+      },
+      "score_pct": 50
+    },
+    {
+      "applicable": 13,
+      "hri": 1,
+      "key": "devops",
+      "lens": "devops",
+      "maturity_level": 1,
+      "maturity_name": "Initial",
+      "met": 2,
+      "mri": 6,
+      "name": "DevOps lens",
+      "not_applicable": 0,
+      "not_met": 5,
+      "partial": 6,
+      "question_risk": {
+        "DL.ADS": "high",
+        "DL.CD": "medium",
+        "DL.CI": "none",
+        "DL.EAC": "medium",
+        "DL.SCM": "none",
+        "O.CM": "medium",
+        "O.SI": "medium",
+        "QA.FT": "medium",
+        "QA.ST": "medium"
+      },
+      "score_pct": 38
+    }
+  ]
+}

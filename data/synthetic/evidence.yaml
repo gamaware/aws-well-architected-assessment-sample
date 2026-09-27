@@ -1,0 +1,45 @@
+# Evidence register. Findings cite these IDs. Items with a `source` file are read by scripts/;
+# the others are summaries of interviews and read-only reviews, all fictional.
+evidence:
+  - id: EV-01
+    kind: interview
+    title: Scoping workshop with the head of engineering and the platform lead
+  - id: EV-02
+    kind: interview
+    title: Two-hour architecture and operations interview with the platform lead and two backend engineers
+  - id: EV-03
+    kind: interview
+    title: Support interview with the customer support lead about outages and how customers report them
+  - id: EV-04
+    kind: review
+    title: Read-only review of the GitHub Actions workflows in the storefront and orders repositories
+  - id: EV-05
+    kind: export
+    title: IAM credential report for the production account (synthetic extract)
+    source: data/synthetic/exports/credential-report.csv
+  - id: EV-06
+    kind: export
+    title: Deployment history for the observation window (synthetic extract)
+    source: data/synthetic/exports/deployments.csv
+  - id: EV-07
+    kind: export
+    title: Incident log for the observation window (synthetic extract)
+    source: data/synthetic/exports/incidents.csv
+  - id: EV-08
+    kind: review
+    title: Read-only review of the Terraform repository, its state layout and drift against the account
+  - id: EV-09
+    kind: review
+    title: Read-only review of CloudWatch dashboards, alarms and log groups
+  - id: EV-10
+    kind: review
+    title: Read-only review of the Aurora cluster, AWS Backup plans and restore history
+  - id: EV-11
+    kind: review
+    title: Read-only review of Cost Explorer by service and by tag, and of AWS Budgets
+  - id: EV-12
+    kind: review
+    title: Read-only review of AWS Security Hub and Amazon Inspector findings
+  - id: EV-13
+    kind: review
+    title: Read-only review of the ECS services, task sizes and scaling policies
