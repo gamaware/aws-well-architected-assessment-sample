@@ -131,6 +131,20 @@ class Renderer:
         ]
         return _table(["Measure", "Value"], rows)
 
+    def block_headline(self) -> str:
+        fw, dv = self.scores["framework"], self.scores["devops"]
+        by_risk = [sum(e.item.risk == risk for e in self.backlog) for risk in ("high", "medium", "low")]
+        return (
+            _wrap(
+                f"{fw['best_practices'] + dv['best_practices']} best practices reviewed, {len(self.backlog)} gaps: "
+                f"{by_risk[0]} high, {by_risk[1]} medium and {by_risk[2]} low. That makes {fw['hri'] + dv['hri']} "
+                f"high-risk issues ({fw['hri']} in the framework, {dv['hri']} in the DevOps lens) and "
+                f"{fw['mri'] + dv['mri']} medium-risk issues. Well-Architected score {fw['score_pct']}%, DevOps lens "
+                f"score {dv['score_pct']}%."
+            )
+            + "\n"
+        )
+
     def block_pillar_scores(self, lens: str) -> str:
         rows = [
             [
@@ -232,6 +246,7 @@ class Renderer:
             return self.block_findings(name.split(":", 1)[1])
         blocks = {
             "summary": self.block_summary,
+            "headline": self.block_headline,
             "top-recommendations": self.block_top,
             "pillar-scores": lambda: self.block_pillar_scores("wellarchitected"),
             "devops-scores": lambda: self.block_pillar_scores("devops"),

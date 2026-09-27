@@ -23,9 +23,8 @@ checks them after they land, and recovery waits for a customer to complain. The 
 layer. The orders database has backups that nobody has restored and a single writer, and no one has agreed how long
 checkout may be down.
 
-The fixes are mostly configuration and process, not new architecture. The team already does several things well:
-it keeps everything in version control, separates production into its own account, encrypts data at rest, and
-builds on managed services.
+Most fixes are configuration and process changes on the existing architecture. The team already keeps everything in
+version control, runs production in its own account, encrypts data at rest, and builds on managed services.
 
 <!-- BEGIN GENERATED: summary -->
 
@@ -73,7 +72,7 @@ The assessment followed the method in [`docs/methodology.md`](../docs/methodolog
 4. Every answer was recorded against its best practice with a status, a risk rating, an effort estimate and an owner.
 5. Scripts scored the answers, built the backlog and scheduled the roadmap from fixed rules.
 
-**How to read the scores.** A best practice earns 1 when met, 0.5 when partial and 0 when not met; the pillar score
+Scores work as follows. A best practice earns 1 when met, 0.5 when partial and 0 when not met; the pillar score
 is the share earned. A question is a high-risk issue (HRI) when any gap under it is rated high, and a medium-risk
 issue (MRI) when its worst gap is medium, which mirrors how the Well-Architected Tool reports risk per question.
 Maturity levels run from 1 (Initial, below 40%) to 4 (Optimized, 80% and above).
@@ -105,8 +104,8 @@ Maturity levels run from 1 (Initial, below 40%) to 4 (Optimized, 80% and above).
 
 <!-- END GENERATED: devops-scores -->
 
-Reliability and security carry most of the high risks. Cost optimization scores low but holds no high risk: the
-spend is higher than it needs to be, not out of control.
+Reliability and security carry most of the high risks. Cost optimization scores low but holds no high risk; the
+gaps there are oversized tasks, idle resources and On-Demand pricing.
 
 ## 4. Findings by pillar
 

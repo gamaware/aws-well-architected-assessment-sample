@@ -9,13 +9,18 @@ from pathlib import Path
 from wa_assess.model import AssessmentError, load
 from wa_assess.render import Renderer
 
+# Markdown files whose BEGIN/END GENERATED blocks are rendered from the data. The report must exist; the README is
+# optional so the tests can work on a copy of data/ and report/ alone.
 REPORT = "report/REPORT.md"
+README = "README.md"
 
 
 def outputs(repo_root: Path) -> dict[str, str]:
     renderer = Renderer(load(repo_root / "data" / "synthetic"), repo_root)
     files = renderer.files()
     files[REPORT] = renderer.report((repo_root / REPORT).read_text(encoding="utf-8"))
+    if (repo_root / README).is_file():
+        files[README] = renderer.report((repo_root / README).read_text(encoding="utf-8"))
     return files
 
 
