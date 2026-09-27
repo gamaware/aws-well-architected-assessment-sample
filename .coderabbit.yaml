@@ -1,0 +1,31 @@
+language: en-US
+reviews:
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "data/synthetic/**"
+      instructions: >-
+        Fictional assessment answers for Harbor Goods. Best-practice IDs and titles must match the current AWS
+        Well-Architected Framework or DevOps Guidance exactly. Only AWS documentation example account IDs
+        (111122223333, 444455556666, 123456789012) and example.com domains. Every changed answer needs
+        `make evidence` so evidence/ and the report tables stay in step.
+    - path: "scripts/**"
+      instructions: >-
+        Scoring, backlog and roadmap rules are documented in docs/methodology.md and ADRs. Flag any rule change
+        that is not reflected there or not covered by a test in tests/.
+    - path: "report/REPORT.md"
+      instructions: >-
+        Numbers in prose must match evidence/. Generated blocks sit between BEGIN/END GENERATED markers and must
+        not be edited by hand. Never attribute findings to a real organization.
+    - path: ".github/workflows/**"
+      instructions: >-
+        permissions: {} at the top and per-job grants, actions pinned to full SHAs with a version comment,
+        no pull_request_target, event data passed through env, no cloud credentials or id-token.
+    - path: "**/*.sh"
+      instructions: >-
+        Must pass shellcheck and shellharden. Quote every variable; use arrays for word splitting.
+    - path: "**/*.md"
+      instructions: >-
+        Line length 120 (tables exempt), English, dateless, AWS documentation example IDs only, no marketing
+        adjectives.
