@@ -10,9 +10,8 @@ Two kinds of proof:
 from __future__ import annotations
 
 import csv
-import os
 import re
-from pathlib import Path
+import subprocess
 
 import pytest
 import yaml
@@ -131,13 +130,15 @@ def test_report_has_no_unfilled_placeholders_and_cites_known_evidence(repo_root,
 
 
 def test_only_documentation_example_account_ids_appear(repo_root):
-    skip = {".git", ".venv", ".pytest_cache", ".ruff_cache", "__pycache__"}
+    # Only files git tracks: gitignored local files (tool caches, live-test output) are never published.
+    # /usr/bin/git exists on macOS and the Ubuntu CI runner; an absolute literal keeps ruff's S603/S607 satisfied.
     suffixes = {".md", ".yaml", ".yml", ".csv", ".json", ".sh", ".py", ".toml"}
-    for folder, dirs, files in os.walk(repo_root):
-        dirs[:] = [d for d in dirs if d not in skip]
-        for name in files:
-            path = Path(folder) / name
-            if path.suffix not in suffixes:
-                continue
-            found = set(re.findall(r"(?<!\d)\d{12}(?!\d)", path.read_text(encoding="utf-8", errors="ignore")))
-            assert found <= ALLOWED_ACCOUNT_IDS, f"{path.relative_to(repo_root)}: {found - ALLOWED_ACCOUNT_IDS}"
+    tracked = subprocess.run(
+        ["/usr/bin/git", "ls-files", "-z"], cwd=repo_root, check=True, capture_output=True, text=True
+    ).stdout.split("\0")
+    for name in filter(None, tracked):
+        path = repo_root / name
+        if path.suffix not in suffixes or not path.is_file():
+            continue
+        found = set(re.findall(r"(?<!\d)\d{12}(?!\d)", path.read_text(encoding="utf-8", errors="ignore")))
+        assert found <= ALLOWED_ACCOUNT_IDS, f"{name}: {found - ALLOWED_ACCOUNT_IDS}"
