@@ -1,7 +1,7 @@
 # Assessment methodology
 
 This page describes how the assessment in [`report/REPORT.md`](../report/REPORT.md) runs in an engagement and how
-this repository reproduces it. The client, Harbor Goods, is fictional. The process is the same one used for real reviews.
+this repository reproduces it. The client, Harbor Goods, is fictional.
 
 ## What the assessment covers
 
@@ -16,7 +16,8 @@ this repository reproduces it. The client, Harbor Goods, is fictional. The proce
   walks through every capability that applies.
 - **Best-practice IDs.** Framework IDs follow the `OPS05-BP01` pattern (pillar, question, best practice). DevOps
   Guidance IDs follow the `[DL.CI.1]` pattern (saga, capability, best practice); the data stores them without
-  brackets. The titles match the current AWS documentation word for word.
+  brackets. The titles match the current AWS documentation word for word: `make test-live` checks the framework
+  titles against the AWS Well-Architected Tool, and review checks the DevOps Guidance titles.
 
 ## How an engagement runs
 
