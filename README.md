@@ -95,7 +95,7 @@ schedules the roadmap, then writes `evidence/` and the tables in the report. Sou
 ## Verify locally
 
 Prerequisites: [uv](https://docs.astral.sh/uv/) 0.9 or later (it installs Python 3.13 and the pinned packages from
-`uv.lock`) and GNU Make. The PDF also needs pandoc 3 and Pango (`brew install pandoc pango` on macOS).
+`uv.lock`) and GNU Make. `make pdf` also needs Docker; it runs the same pinned pandoc LaTeX image as CI.
 
 ```bash
 make setup    # install the pinned toolchain into .venv
@@ -144,7 +144,7 @@ docs/assets/           Cover, social preview (spec, illustration, rendered PNG)
 | [0002](docs/adr/0002-partial-credit-and-risk-per-question.md) | Score with partial credit and count risks per question | Accepted |
 | [0003](docs/adr/0003-backlog-ranking-and-roadmap-buckets.md) | Rank the backlog by risk and effort, and pull dependencies forward on the roadmap | Accepted |
 | [0004](docs/adr/0004-offline-verification-manual-live-round-trip.md) | Verify offline in CI and keep the Well-Architected Tool round trip manual | Accepted |
-| [0005](docs/adr/0005-pdf-with-pandoc-and-weasyprint.md) | Render the PDF from Markdown with pandoc and WeasyPrint | Accepted |
+| [0005](docs/adr/0005-pdf-with-shared-pandoc-image.md) | Render the PDF with the shared pandoc LaTeX image | Accepted |
 
 ## Security and quality gates
 

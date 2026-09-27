@@ -5,8 +5,9 @@ SHELL := bash
 UV ?= uv
 RUN := $(UV) run --locked
 PY := PYTHONPATH=scripts $(RUN) python -m wa_assess
-# Homebrew keeps Pango outside the default macOS library path; WeasyPrint needs it for the PDF.
-PDF_ENV := DYLD_FALLBACK_LIBRARY_PATH=$${DYLD_FALLBACK_LIBRARY_PATH:-/opt/homebrew/lib}
+# Same image and arguments as the shared report workflow in gamaware/.github, so CI and the committed PDF match.
+PANDOC_IMAGE := pandoc/latex:3.11@sha256:cdbf139f607237498b412b3aa051008311d69b88006ab47550efba357af3b277
+PANDOC_ARGS := --pdf-engine=xelatex -V geometry:margin=2.2cm --toc
 
 .PHONY: help setup lint test check verify evidence pdf test-live clean
 
@@ -31,11 +32,9 @@ verify: lint test check ## Everything CI runs on the code and data (offline)
 evidence: ## Regenerate evidence/ and the generated blocks in report/REPORT.md
 	$(PY) generate
 
-pdf: ## Render report/REPORT.pdf from report/REPORT.md (pandoc + WeasyPrint)
-	$(PDF_ENV) $(UV) run --locked --group report pandoc report/REPORT.md \
-		--from gfm --standalone --embed-resources --resource-path=report \
-		--metadata pagetitle="Harbor Goods Well-Architected and DevOps assessment" \
-		--css report/report.css --pdf-engine=weasyprint --output report/REPORT.pdf
+pdf: ## Render report/REPORT.pdf from report/REPORT.md (pandoc + LaTeX in Docker)
+	docker run --rm --platform linux/amd64 --user "$$(id -u):$$(id -g)" -e HOME=/tmp \
+		-v "$(CURDIR):/data" -w /data/report $(PANDOC_IMAGE) REPORT.md $(PANDOC_ARGS) -o REPORT.pdf
 
 test-live: ## Manual only: round-trip the answers through the AWS Well-Architected Tool in the dev account
 	scripts/live/wa-tool-roundtrip.sh

@@ -9,4 +9,4 @@ compliance, notes).
 | [0002](0002-partial-credit-and-risk-per-question.md) | Score with partial credit and count risks per question | Accepted |
 | [0003](0003-backlog-ranking-and-roadmap-buckets.md) | Rank the backlog by risk and effort, and pull dependencies forward on the roadmap | Accepted |
 | [0004](0004-offline-verification-manual-live-round-trip.md) | Verify offline in CI and keep the Well-Architected Tool round trip manual | Accepted |
-| [0005](0005-pdf-with-pandoc-and-weasyprint.md) | Render the PDF from Markdown with pandoc and WeasyPrint | Accepted |
+| [0005](0005-pdf-with-shared-pandoc-image.md) | Render the PDF with the shared pandoc LaTeX image | Accepted |
