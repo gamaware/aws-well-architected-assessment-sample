@@ -50,23 +50,25 @@ def answers(client, workload_id: str, lens: str) -> list[dict]:
 
 def record(client, workload_id: str, lens: str, items: list) -> list[str]:
     """Select the met best practices per question; return the titles the Tool does not know."""
+    # Titles are matched within a pillar: the Tool reuses some, such as "Perform post-incident analysis" in both
+    # operational excellence and reliability.
     choices, repeated = {}, set()
     for answer in answers(client, workload_id, lens):
         for choice in answer["Choices"]:
-            title = normalize(choice["Title"])
-            if title in choices and title != NONE_OF_THESE:
-                repeated.add(title)
-            choices[title] = (answer["QuestionId"], choice["ChoiceId"], answer)
-    # A title that is missing, or that appears under two questions, cannot be matched safely.
-    missing = [
-        f"{item.id} {item.title}"
-        for item in items
-        if normalize(item.title) not in choices or normalize(item.title) in repeated
-    ]
+            key = (answer["PillarId"], normalize(choice["Title"]))
+            if key in choices and key[1] != NONE_OF_THESE:
+                repeated.add(key)
+            choices[key] = (answer["QuestionId"], choice["ChoiceId"], answer)
+
+    def key_of(item) -> tuple[str, str]:
+        return FRAMEWORK_PILLARS.get(item.pillar, item.pillar), normalize(item.title)
+
+    # A title that is missing, or that appears under two questions of one pillar, cannot be matched safely.
+    missing = [f"{item.id} {item.title}" for item in items if key_of(item) not in choices or key_of(item) in repeated]
     selected: dict[str, list[str]] = {}
     for item in items:
-        match = choices.get(normalize(item.title))
-        if not match or normalize(item.title) in repeated:
+        match = choices.get(key_of(item))
+        if not match or key_of(item) in repeated:
             continue
         question_id, choice_id, _ = match
         selected.setdefault(question_id, [])

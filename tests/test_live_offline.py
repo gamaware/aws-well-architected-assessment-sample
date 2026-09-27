@@ -30,8 +30,8 @@ class FakeTool:
         ]
         return {
             "AnswerSummaries": [
-                {"QuestionId": "dev-integ", "Choices": choices},
-                {"QuestionId": "mit-deploy-risks", "Choices": rollback},
+                {"PillarId": "operationalExcellence", "QuestionId": "dev-integ", "Choices": choices},
+                {"PillarId": "operationalExcellence", "QuestionId": "mit-deploy-risks", "Choices": rollback},
             ]
         }
 
@@ -39,10 +39,10 @@ class FakeTool:
         self.updates.append(kwargs)
 
 
-def item(item_id, title, status):
+def item(item_id, title, status, pillar="operational-excellence"):
     return Item(
         id=item_id,
-        pillar="operational-excellence",
+        pillar=pillar,
         question=item_id[:5],
         title=title,
         status=status,
@@ -85,3 +85,31 @@ def test_a_title_listed_under_two_questions_is_reported_not_guessed():
     missing = roundtrip.record(tool, "wl-1", "wellarchitected", [item("OPS05-BP01", "Use version control", "met")])
     assert missing == ["OPS05-BP01 Use version control"]
     assert tool.updates == []
+
+
+def test_a_title_reused_by_another_pillar_matches_within_its_own_pillar():
+    class OtherPillar(FakeTool):
+        def list_answers(self, **kwargs):
+            page = super().list_answers(**kwargs)
+            page["AnswerSummaries"].append(
+                {
+                    "PillarId": "reliability",
+                    "QuestionId": "rel-learn",
+                    "Choices": [{"ChoiceId": "rel_vc", "Title": "Use version control"}],
+                }
+            )
+            return page
+
+    tool = OtherPillar()
+    missing = roundtrip.record(
+        tool,
+        "wl-1",
+        "wellarchitected",
+        [
+            item("OPS05-BP01", "Use version control", "met"),
+            item("REL12-BP01", "Use version control", "not_met", pillar="reliability"),
+        ],
+    )
+    assert missing == []
+    selected = {u["QuestionId"]: u["SelectedChoices"] for u in tool.updates}
+    assert selected == {"dev-integ": ["ops_version_control"], "rel-learn": []}
