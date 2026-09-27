@@ -1,7 +1,8 @@
 # Harbor Goods: AWS Well-Architected and DevOps assessment
 
-> **Fictional sample.** Harbor Goods is an invented company. Every account ID, finding and figure in this report
-> comes from the synthetic data in `data/synthetic/`. The assessor reviewed no real account or client.
+> **Fictional sample.** Harbor Goods and all data here are fictional. Each repository in this portfolio is a
+> separate engagement with Harbor Goods, a fictional mid-size retailer. Account IDs are AWS documentation examples.
+> Every finding and figure in this report comes from the synthetic data in `data/synthetic/`.
 
 | Item | Detail |
 | --- | --- |

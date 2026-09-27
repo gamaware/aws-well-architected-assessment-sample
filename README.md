@@ -1,25 +1,29 @@
 # AWS Well-Architected and DevOps assessment sample
 
-A complete assessment deliverable for one workload: scored answers across the six pillars and the DevOps lens, a
+An assessment deliverable for one workload: scored answers across the six pillars and the DevOps lens, a
 risk-rated backlog, a 30/60/90-day roadmap and a client report, all generated from data and checked by tests.
 
 [![CI](https://github.com/gamaware/aws-well-architected-assessment-sample/actions/workflows/ci.yml/badge.svg)](https://github.com/gamaware/aws-well-architected-assessment-sample/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Fictional sample](https://img.shields.io/badge/data-fictional%20sample-orange.svg)
+![Fictional sample](https://img.shields.io/badge/fictional-sample-5b6b7f)
 
-![AWS Well-Architected and DevOps assessment with a risk-rated backlog](docs/assets/cover.png)
+![DevOps and Well-Architected assessment](docs/assets/cover.png)
+
+> **Fictional sample.** Harbor Goods and all data here are fictional. Each repository in this portfolio is a
+> separate engagement with Harbor Goods, a fictional mid-size retailer. Account IDs are AWS documentation examples.
 
 ## Executive summary
 
 Harbor Goods, a fictional mid-size retailer, asked for a review of `storefront-orders`, the workload behind its
-online store. The team deploys more than twice a week, and recovery from a bad release is slow. Releases reach
+online store. The team deploys several times a week, and recovery from a bad release is slow. Releases reach
 every user at once, nothing checks them after they land, CI deploys with a long-lived administrator key, and nobody
 has restored the orders database from a backup.
 
 <!-- BEGIN GENERATED: headline -->
 
-58 best practices reviewed, 49 gaps: 9 high, 27 medium and 13 low. That makes 8 high-risk issues (7 in the framework, 1
-in the DevOps lens) and 21 medium-risk issues. Well-Architected score 39%, DevOps lens score 38%.
+58 best practices reviewed, 49 gaps: 9 high, 27 medium and 13 low. Risk counts once per question, so the 9 high-rated
+gaps across 8 questions make 8 high-risk issues (HRI; 7 in the framework, 1 in the DevOps lens), plus 21 medium-risk
+issues (MRI). Well-Architected score 39%, DevOps lens score 38%.
 
 <!-- END GENERATED: headline -->
 
@@ -94,8 +98,9 @@ schedules the roadmap, then writes `evidence/` and the tables in the report. Sou
 
 ## Verify locally
 
-Prerequisites: [uv](https://docs.astral.sh/uv/) 0.9 or later (it installs Python 3.13 and the pinned packages from
-`uv.lock`) and GNU Make. `make pdf` also needs Docker; it runs the same pinned pandoc LaTeX image as CI.
+Prerequisites: [uv](https://docs.astral.sh/uv/) 0.12 or later (CI pins 0.12.19; it installs Python 3.13 and the
+pinned packages from `uv.lock`) and GNU Make. `make pdf` also needs Docker; it runs the same pinned pandoc LaTeX
+image as CI.
 
 ```bash
 make setup    # install the pinned toolchain into .venv
@@ -106,6 +111,7 @@ Expected output ends with:
 
 ```text
 ok: 7 outputs match data/synthetic
+verify: all checks passed
 ```
 
 The first run takes under a minute while uv downloads packages; later runs take about five seconds. The build
@@ -128,7 +134,7 @@ data/synthetic/        Fictional inputs: workload, evidence register, answers pe
 scripts/wa_assess/     Validate, score, rank, schedule and render (python -m wa_assess generate|check)
 scripts/live/          Manual Well-Architected Tool round trip (make test-live)
 evidence/              Generated: scores, delivery metrics, backlog (CSV and Markdown), roadmap
-report/                REPORT.md (canonical), REPORT.pdf (generated), print stylesheet
+report/                REPORT.md (canonical), REPORT.pdf (generated)
 tests/                 Rule tests, an independent reference implementation, offline test of the live script
 docs/methodology.md    How the assessment is run
 docs/adr/              Decision records
@@ -138,7 +144,9 @@ docs/assets/           Cover, social preview (spec, illustration, rendered PNG)
 
 ## Decisions and trade-offs
 
-| ADR | Title | Status |
+Architecture decision records follow the *Fundamentals of Software Architecture* (2nd ed.) format.
+
+| Number | Title | Status |
 | --- | --- | --- |
 | [0001](docs/adr/0001-answers-as-data-report-tables-generated.md) | Record answers as data and generate the report tables from them | Accepted |
 | [0002](docs/adr/0002-partial-credit-and-risk-per-question.md) | Score with partial credit and count risks per question | Accepted |
@@ -173,9 +181,13 @@ Workflows start from `permissions: {}`, pin actions to full commit SHAs, and nev
 
 ## Related work
 
-This repository is part of the [AWS DevOps portfolio](https://github.com/gamaware/aws-devops-portfolio), where it
-backs the service "an AWS Well-Architected and DevOps assessment with a risk-rated backlog". The method is the one
-Alex Garcia uses in DevOps maturity audits for ITESO and for freelance clients in Guadalajara. The findings here are
-fictional and are not drawn from any of that work.
+Part of the [AWS DevOps portfolio](https://github.com/gamaware/aws-devops-portfolio); it backs the "DevOps and
+Well-Architected assessment" service:
+[DevOps and Well-Architected assessment on Upwork](https://www.upwork.com/freelancers/~014b3520cf9e140103). The
+method is the one Alex uses in audits for ITESO and freelance clients in Guadalajara. Contribution, conduct and
+support guidelines are inherited from [gamaware/.github](https://github.com/gamaware/.github); see also
+[SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md).
 
-Licensed under the [MIT License](LICENSE).
+## License
+
+[MIT](LICENSE)
