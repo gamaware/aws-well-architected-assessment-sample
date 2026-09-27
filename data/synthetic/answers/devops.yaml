@@ -12,6 +12,10 @@ questions:
   QA.ST: Security testing
   O.SI: Strategic instrumentation
   O.CM: Continuous monitoring
+  AG.SAD: Secure access and delegation
+  AG.CA: Continuous auditing
+  OA.STD: Supportive team dynamics
+  OA.BCL: Balanced cognitive load
 items:
   - id: DL.SCM.2
     question: DL.SCM
@@ -173,3 +177,63 @@ items:
       {incidents.postmortems} of {incidents.total} incidents have an analysis, and nobody tracked any action from them
       to completion.
     recommendation: Delivered by OPS11-BP02; review open actions in the weekly operations review.
+  - id: AG.SAD.3
+    question: AG.SAD
+    title: Treat pipelines as production resources
+    status: not_met
+    risk: medium
+    effort: S
+    owner: Platform lead
+    depends_on: [SEC03-BP02]
+    evidence: [EV-04, EV-05]
+    observation: >-
+      Any repository admin can edit the deploy workflows, and the workflows run with the ci-deployer key that holds
+      AdministratorAccess in production.
+    recommendation: >-
+      Protect the workflow files with CODEOWNERS and required reviews, and run production deployments only from a
+      GitHub environment with required reviewers.
+  - id: AG.CA.1
+    question: AG.CA
+    title: Establish comprehensive audit trails
+    status: partial
+    risk: low
+    effort: S
+    owner: Platform lead
+    depends_on: [SEC04-BP01]
+    evidence: [EV-06, EV-09]
+    observation: >-
+      The organization trail records API calls, but nothing links a production change to its pull request, approver
+      and pipeline run.
+    recommendation: >-
+      Record the commit SHA, pull request and approver on every deployment (for example as ECS task definition tags
+      and a GitHub deployment record), and keep the records for at least a year.
+  - id: OA.STD.6
+    question: OA.STD
+    title: Provide teams ownership of the entire value stream for their product
+    status: partial
+    risk: medium
+    effort: M
+    owner: Head of engineering
+    depends_on: [DL.CD.4]
+    evidence: [EV-02]
+    observation: >-
+      Backend engineers own the code, but the platform lead starts every production deployment and runs every
+      database migration, so releases wait for one person.
+    recommendation: >-
+      Once deployments run from the pipeline, let each service's engineers approve and release their own changes,
+      with the platform lead reviewing only infrastructure changes.
+  - id: OA.BCL.7
+    question: OA.BCL
+    title: Cultivate a psychologically-safe culture for experimentation
+    status: partial
+    risk: low
+    effort: S
+    owner: Head of engineering
+    depends_on: [OPS11-BP02]
+    evidence: [EV-02, EV-07]
+    observation: >-
+      Engineers described incident reviews that start from who made the change, and said they batch releases to avoid
+      being the one on the call.
+    recommendation: >-
+      Run post-incident analyses in a blameless format that asks what made the failure possible, and have the head of
+      engineering open each review by stating that rule.

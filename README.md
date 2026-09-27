@@ -18,8 +18,8 @@ has restored the orders database from a backup.
 
 <!-- BEGIN GENERATED: headline -->
 
-54 best practices reviewed, 45 gaps: 9 high, 25 medium and 11 low. That makes 8 high-risk issues (7 in the framework, 1
-in the DevOps lens) and 19 medium-risk issues. Well-Architected score 39%, DevOps lens score 38%.
+58 best practices reviewed, 49 gaps: 9 high, 27 medium and 13 low. That makes 8 high-risk issues (7 in the framework, 1
+in the DevOps lens) and 21 medium-risk issues. Well-Architected score 39%, DevOps lens score 38%.
 
 <!-- END GENERATED: headline -->
 
@@ -133,6 +133,7 @@ tests/                 Rule tests, an independent reference implementation, offl
 docs/methodology.md    How the assessment is run
 docs/adr/              Decision records
 docs/diagrams/         Diagram sources (.drawio) and exports (.png)
+docs/assets/           Cover, social preview (spec, illustration, rendered PNG)
 ```
 
 ## Decisions and trade-offs
@@ -163,8 +164,8 @@ Workflows start from `permissions: {}`, pin actions to full commit SHAs, and nev
 
 - Harbor Goods, its people, accounts, incidents and exports are fictional. The findings show the format and the
   reasoning, not the state of any real system.
-- The DevOps lens findings cover the development lifecycle, quality assurance and observability sagas. A full
-  engagement also covers organizational adoption and automated governance.
+- The DevOps lens findings sample all five sagas of the DevOps Guidance but not every capability in each. A full
+  engagement walks through every capability that applies to the workload.
 - The offline checks prove the report is consistent with its data. They cannot prove the data describes a real
   workload; in an engagement that proof is the evidence itself and the client's review of the findings.
 - A real engagement records the answers in the AWS Well-Architected Tool in the client's own account, saves a

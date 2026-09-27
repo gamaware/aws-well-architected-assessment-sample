@@ -33,10 +33,10 @@ version control, runs production in its own account, encrypts data at rest, and 
 | Well-Architected score (six pillars) | 39% |
 | DevOps lens score | 38% |
 | High-risk issues (HRI), framework and DevOps lens | 7 and 1 |
-| Medium-risk issues (MRI), framework and DevOps lens | 13 and 6 |
-| Best practices reviewed | 54 |
-| Backlog items (high, medium, low) | 45 (9, 25, 11) |
-| Items planned for 30, 60 and 90 days | 10, 24, 11 |
+| Medium-risk issues (MRI), framework and DevOps lens | 13 and 8 |
+| Best practices reviewed | 58 |
+| Backlog items (high, medium, low) | 49 (9, 27, 13) |
+| Items planned for 30, 60 and 90 days | 10, 26, 13 |
 | Deployments per week | 3.7 |
 | Change failure rate | 10.6% |
 | Median time to restore service | 70 minutes |
@@ -102,7 +102,7 @@ Maturity levels run from 1 (Initial, below 40%) to 4 (Optimized, 80% and above).
 
 | Lens | Score | Maturity | Met | Partial | Not met | HRI | MRI |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| DevOps lens | 38% | 1 Initial | 2 | 6 | 5 | 1 | 6 |
+| DevOps lens | 38% | 1 Initial | 2 | 9 | 6 | 1 | 8 |
 
 <!-- END GENERATED: devops-scores -->
 
@@ -146,7 +146,7 @@ Application code, Terraform and pipeline definitions all live in GitHub with bra
 
 #### OPS05-BP02 Test and validate changes
 
-Status: Partial. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-23. Evidence: EV-04.
+Status: Partial. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-24. Evidence: EV-04.
 
 Unit tests run on pull requests for orders-api only. storefront-web and the fulfilment worker merge without automated
 tests, and nothing tests database migrations before production.
@@ -162,7 +162,7 @@ GitHub Actions builds and deploys every service; nobody builds images on a lapto
 
 #### OPS05-BP10 Fully automate integration and deployment
 
-Status: Partial. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-24. Evidence: EV-04, EV-06.
+Status: Partial. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-25. Evidence: EV-04, EV-06.
 
 Deployments to production need an engineer to run a workflow by hand and then run the database migration from a laptop.
 The median lead time from merge to production is 67.9 hours.
@@ -182,7 +182,7 @@ schema changes, and keep the previous task definition revision ready to redeploy
 
 #### OPS06-BP03 Employ safe deployment strategies
 
-Status: Not met. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-25. Evidence: EV-04, EV-13.
+Status: Not met. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-26. Evidence: EV-04, EV-13.
 
 ECS rolling updates replace all tasks at once with minimumHealthyPercent set to 0.
 
@@ -211,7 +211,7 @@ its runbook.
 
 #### OPS08-BP01 Analyze workload metrics
 
-Status: Partial. Risk: Low. Effort: S. Owner: Head of engineering. Backlog: HG-35. Evidence: EV-09.
+Status: Partial. Risk: Low. Effort: S. Owner: Head of engineering. Backlog: HG-37. Evidence: EV-09.
 
 Metrics exist but nobody reviews them outside incidents.
 
@@ -325,7 +325,7 @@ it once as a tabletop exercise.
 
 #### SEC11-BP02 Automate testing throughout the development and release lifecycle
 
-Status: Not met. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-26. Evidence: EV-04.
+Status: Not met. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-27. Evidence: EV-04.
 
 No static analysis, dependency scanning or infrastructure-as-code scanning runs in the pipelines.
 
@@ -393,7 +393,7 @@ with automatic failover on ElastiCache.
 
 #### REL12-BP04 Test resiliency using chaos engineering
 
-Status: Not met. Risk: Low. Effort: M. Owner: Platform lead. Backlog: HG-44. Evidence: EV-02.
+Status: Not met. Risk: Low. Effort: M. Owner: Platform lead. Backlog: HG-48. Evidence: EV-02.
 
 The team has never injected a failure on purpose.
 
@@ -411,7 +411,7 @@ workload's operations document.
 
 #### REL13-BP02 Use defined recovery strategies to meet the recovery objectives
 
-Status: Not met. Risk: Medium. Effort: L. Owner: Platform lead. Backlog: HG-34. Evidence: EV-10.
+Status: Not met. Risk: Medium. Effort: L. Owner: Platform lead. Backlog: HG-36. Evidence: EV-10.
 
 The workload has no disaster recovery strategy beyond backups in the same Region.
 
@@ -432,7 +432,7 @@ likely enough), then document and test it.
 
 #### PERF01-BP06 Use benchmarking to drive architectural decisions
 
-Status: Not met. Risk: Low. Effort: M. Owner: Backend engineers. Backlog: HG-45. Evidence: EV-02.
+Status: Not met. Risk: Low. Effort: M. Owner: Backend engineers. Backlog: HG-49. Evidence: EV-02.
 
 The team chose instance and task sizes at launch and never compared them with alternatives.
 
@@ -447,7 +447,7 @@ Containers on Fargate and an event-driven Lambda worker fit the workload's traff
 
 #### PERF02-BP03 Collect compute-related metrics
 
-Status: Partial. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-36. Evidence: EV-09.
+Status: Partial. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-38. Evidence: EV-09.
 
 ECS Container Insights is off, so per-task memory is invisible; the team found the INC-101 memory exhaustion in logs.
 
@@ -455,7 +455,7 @@ Recommendation: Enable Container Insights on the production cluster and add memo
 
 #### PERF05-BP04 Load test your workload
 
-Status: Not met. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-27. Evidence: EV-02, EV-07.
+Status: Not met. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-28. Evidence: EV-02, EV-07.
 
 Nobody load tests before campaigns; INC-103 happened during a promotional email campaign that marketing scheduled
 without telling engineering.
@@ -479,7 +479,7 @@ add a campaign calendar that engineering can see.
 
 #### COST02-BP05 Implement cost controls
 
-Status: Partial. Risk: Low. Effort: S. Owner: Head of engineering. Backlog: HG-37. Evidence: EV-11.
+Status: Partial. Risk: Low. Effort: S. Owner: Head of engineering. Backlog: HG-39. Evidence: EV-11.
 
 One account-level AWS Budgets alert exists and emails a former employee's address.
 
@@ -498,7 +498,7 @@ policy in AWS Organizations.
 
 #### COST04-BP03 Decommission resources
 
-Status: Not met. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-38. Evidence: EV-05, EV-11.
+Status: Not met. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-40. Evidence: EV-05, EV-11.
 
 The legacy-image-sync user and its Lambda function have been idle for months, and three unattached Elastic IP addresses
 and 14 old EBS snapshots remain in staging.
@@ -507,7 +507,7 @@ Recommendation: Remove the idle resources after confirming with their owners, an
 
 #### COST06-BP03 Select resource type, size, and number automatically based on metrics
 
-Status: Partial. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-28. Evidence: EV-11, EV-13.
+Status: Partial. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-29. Evidence: EV-11, EV-13.
 
 storefront-web runs 2 vCPU tasks that average 9 percent CPU, and the staging environment runs at production size around
 the clock.
@@ -517,7 +517,7 @@ AWS Compute Optimizer recommendations each month.
 
 #### COST07-BP01 Perform pricing model analysis
 
-Status: Not met. Risk: Low. Effort: S. Owner: Head of engineering. Backlog: HG-39. Evidence: EV-11.
+Status: Not met. Risk: Low. Effort: S. Owner: Head of engineering. Backlog: HG-41. Evidence: EV-11.
 
 All compute and the database run on On-Demand pricing.
 
@@ -538,7 +538,7 @@ instances for the writer.
 
 #### SUS02-BP01 Scale workload infrastructure dynamically
 
-Status: Partial. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-40. Evidence: EV-13.
+Status: Partial. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-42. Evidence: EV-13.
 
 Production scales one service; staging never scales down.
 
@@ -546,7 +546,7 @@ Recommendation: Apply the scaling and staging schedule from REL07-BP01 and COST0
 
 #### SUS04-BP03 Use policies to manage the lifecycle of your datasets
 
-Status: Not met. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-41. Evidence: EV-09, EV-10.
+Status: Not met. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-43. Evidence: EV-09, EV-10.
 
 The image bucket keeps every object version forever and most CloudWatch log groups never expire.
 
@@ -576,10 +576,14 @@ The workload runs on Fargate, Aurora, SQS and Lambda rather than self-managed se
 | QA.ST | Security testing | Medium |
 | O.SI | Strategic instrumentation | Medium |
 | O.CM | Continuous monitoring | Medium |
+| AG.SAD | Secure access and delegation | Medium |
+| AG.CA | Continuous auditing | None |
+| OA.STD | Supportive team dynamics | Medium |
+| OA.BCL | Balanced cognitive load | None |
 
 #### DL.SCM.2 Keep feature branches short-lived
 
-Status: Partial. Risk: Low. Effort: S. Owner: Backend engineers. Backlog: HG-43. Evidence: EV-04, EV-06.
+Status: Partial. Risk: Low. Effort: S. Owner: Backend engineers. Backlog: HG-46. Evidence: EV-04, EV-06.
 
 Most pull requests merge within two days, but release branches for storefront-web live for about a week while a batch of
 changes waits for a deployment slot.
@@ -600,7 +604,7 @@ Every push to main builds and pushes an image to Amazon ECR.
 
 #### DL.CD.4 Automate the entire deployment process
 
-Status: Partial. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-30. Evidence: EV-04, EV-06.
+Status: Partial. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-31. Evidence: EV-04, EV-06.
 
 The team ships 3.7 deployments a week, each started by hand, with the database migration run from a laptop.
 
@@ -609,7 +613,7 @@ staging build without any manual command.
 
 #### DL.CD.6 Refine delivery pipelines using metrics for continuous improvement
 
-Status: Not met. Risk: Low. Effort: S. Owner: Head of engineering. Backlog: HG-42. Evidence: EV-06, EV-07.
+Status: Not met. Risk: Low. Effort: S. Owner: Head of engineering. Backlog: HG-45. Evidence: EV-06, EV-07.
 
 Nobody tracks delivery metrics. From the exports, the change failure rate is 10.6 percent and the median time to restore
 service is 70 minutes.
@@ -629,7 +633,7 @@ fulfilment worker through CodeDeploy traffic shifting with alarms.
 
 #### DL.ADS.3 Use staggered deployment and release strategies
 
-Status: Not met. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-29. Evidence: EV-04.
+Status: Not met. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-30. Evidence: EV-04.
 
 Every release reaches all users at once; there are no canary tasks or feature flags.
 
@@ -638,7 +642,7 @@ release risky features behind flags.
 
 #### DL.EAC.1 Organize infrastructure as code for scale
 
-Status: Partial. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-31. Evidence: EV-08.
+Status: Partial. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-32. Evidence: EV-08.
 
 Terraform covers the network, ECS and Aurora, but the team built ElastiCache, the alarms and the Lambda worker in the
 console, and one state file holds production and staging.
@@ -648,7 +652,7 @@ pull request with drift detection each night.
 
 #### QA.FT.1 Ensure individual component functionality with unit tests
 
-Status: Partial. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-33. Evidence: EV-04.
+Status: Partial. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-35. Evidence: EV-04.
 
 orders-api has unit tests with about 40 percent line coverage; the other two services have none.
 
@@ -657,7 +661,7 @@ the tests fail.
 
 #### QA.ST.4 Enhance source code security with static application security testing
 
-Status: Not met. Risk: Medium. Effort: S. Owner: Backend engineers. Backlog: HG-21. Evidence: EV-04.
+Status: Not met. Risk: Medium. Effort: S. Owner: Backend engineers. Backlog: HG-22. Evidence: EV-04.
 
 No static application security testing runs on any repository.
 
@@ -665,7 +669,7 @@ Recommendation: Delivered by SEC11-BP02; track it here so the DevOps lens score 
 
 #### QA.ST.6 Validate third-party components using software composition analysis
 
-Status: Not met. Risk: Medium. Effort: S. Owner: Backend engineers. Backlog: HG-22. Evidence: EV-04, EV-12.
+Status: Not met. Risk: Medium. Effort: S. Owner: Backend engineers. Backlog: HG-23. Evidence: EV-04, EV-12.
 
 Dependencies are never scanned before release; Inspector only finds image vulnerabilities after the image is in Amazon
 ECR.
@@ -674,7 +678,7 @@ Recommendation: Add dependency scanning to pull requests and enable Dependabot s
 
 #### O.SI.3 Instrument all systems for comprehensive telemetry data collection
 
-Status: Partial. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-32. Evidence: EV-09.
+Status: Partial. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-33. Evidence: EV-09.
 
 Services write unstructured logs and no traces, so nobody can follow a slow checkout across storefront-web, orders-api
 and the database.
@@ -684,11 +688,51 @@ OpenTelemetry collector to AWS X-Ray.
 
 #### O.CM.3 Conduct post-incident analysis for continuous improvement
 
-Status: Partial. Risk: Medium. Effort: S. Owner: Head of engineering. Backlog: HG-20. Evidence: EV-07.
+Status: Partial. Risk: Medium. Effort: S. Owner: Head of engineering. Backlog: HG-21. Evidence: EV-07.
 
 2 of 7 incidents have an analysis, and nobody tracked any action from them to completion.
 
 Recommendation: Delivered by OPS11-BP02; review open actions in the weekly operations review.
+
+#### AG.SAD.3 Treat pipelines as production resources
+
+Status: Not met. Risk: Medium. Effort: S. Owner: Platform lead. Backlog: HG-20. Evidence: EV-04, EV-05.
+
+Any repository admin can edit the deploy workflows, and the workflows run with the ci-deployer key that holds
+AdministratorAccess in production.
+
+Recommendation: Protect the workflow files with CODEOWNERS and required reviews, and run production deployments only
+from a GitHub environment with required reviewers.
+
+#### AG.CA.1 Establish comprehensive audit trails
+
+Status: Partial. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-44. Evidence: EV-06, EV-09.
+
+The organization trail records API calls, but nothing links a production change to its pull request, approver and
+pipeline run.
+
+Recommendation: Record the commit SHA, pull request and approver on every deployment (for example as ECS task definition
+tags and a GitHub deployment record), and keep the records for at least a year.
+
+#### OA.STD.6 Provide teams ownership of the entire value stream for their product
+
+Status: Partial. Risk: Medium. Effort: M. Owner: Head of engineering. Backlog: HG-34. Evidence: EV-02.
+
+Backend engineers own the code, but the platform lead starts every production deployment and runs every database
+migration, so releases wait for one person.
+
+Recommendation: Once deployments run from the pipeline, let each service's engineers approve and release their own
+changes, with the platform lead reviewing only infrastructure changes.
+
+#### OA.BCL.7 Cultivate a psychologically-safe culture for experimentation
+
+Status: Partial. Risk: Low. Effort: S. Owner: Head of engineering. Backlog: HG-47. Evidence: EV-02, EV-07.
+
+Engineers described incident reviews that start from who made the change, and said they batch releases to avoid being
+the one on the call.
+
+Recommendation: Run post-incident analyses in a blameless format that asks what made the failure possible, and have the
+head of engineering open each review by stating that rule.
 
 <!-- END GENERATED: findings:devops -->
 
@@ -722,32 +766,36 @@ in [`evidence/backlog.csv`](../evidence/backlog.csv) for import into a tracker, 
 | 17 | HG-17 | SEC10-BP02 | Develop incident management plans | Medium | S | Head of engineering | 60 |
 | 18 | HG-18 | REL07-BP01 | Use automation when obtaining or scaling resources | Medium | S | Platform lead | 60 |
 | 19 | HG-19 | COST03-BP02 | Add organization information to cost and usage | Medium | S | Platform lead | 60 |
-| 20 | HG-20 | O.CM.3 | Conduct post-incident analysis for continuous improvement | Medium | S | Head of engineering | 60 |
-| 21 | HG-21 | QA.ST.4 | Enhance source code security with static application security testing | Medium | S | Backend engineers | 60 |
-| 22 | HG-22 | QA.ST.6 | Validate third-party components using software composition analysis | Medium | S | Backend engineers | 60 |
-| 23 | HG-23 | OPS05-BP02 | Test and validate changes | Medium | M | Backend engineers | 60 |
-| 24 | HG-24 | OPS05-BP10 | Fully automate integration and deployment | Medium | M | Platform lead | 60 |
-| 25 | HG-25 | OPS06-BP03 | Employ safe deployment strategies | Medium | M | Platform lead | 60 |
-| 26 | HG-26 | SEC11-BP02 | Automate testing throughout the development and release lifecycle | Medium | M | Backend engineers | 60 |
-| 27 | HG-27 | PERF05-BP04 | Load test your workload | Medium | M | Backend engineers | 60 |
-| 28 | HG-28 | COST06-BP03 | Select resource type, size, and number automatically based on metrics | Medium | M | Platform lead | 60 |
-| 29 | HG-29 | DL.ADS.3 | Use staggered deployment and release strategies | Medium | M | Platform lead | 60 |
-| 30 | HG-30 | DL.CD.4 | Automate the entire deployment process | Medium | M | Platform lead | 60 |
-| 31 | HG-31 | DL.EAC.1 | Organize infrastructure as code for scale | Medium | M | Platform lead | 60 |
-| 32 | HG-32 | O.SI.3 | Instrument all systems for comprehensive telemetry data collection | Medium | M | Backend engineers | 60 |
-| 33 | HG-33 | QA.FT.1 | Ensure individual component functionality with unit tests | Medium | M | Backend engineers | 60 |
-| 34 | HG-34 | REL13-BP02 | Use defined recovery strategies to meet the recovery objectives | Medium | L | Platform lead | 90 |
-| 35 | HG-35 | OPS08-BP01 | Analyze workload metrics | Low | S | Head of engineering | 90 |
-| 36 | HG-36 | PERF02-BP03 | Collect compute-related metrics | Low | S | Platform lead | 60 |
-| 37 | HG-37 | COST02-BP05 | Implement cost controls | Low | S | Head of engineering | 90 |
-| 38 | HG-38 | COST04-BP03 | Decommission resources | Low | S | Platform lead | 90 |
-| 39 | HG-39 | COST07-BP01 | Perform pricing model analysis | Low | S | Head of engineering | 90 |
-| 40 | HG-40 | SUS02-BP01 | Scale workload infrastructure dynamically | Low | S | Platform lead | 90 |
-| 41 | HG-41 | SUS04-BP03 | Use policies to manage the lifecycle of your datasets | Low | S | Platform lead | 90 |
-| 42 | HG-42 | DL.CD.6 | Refine delivery pipelines using metrics for continuous improvement | Low | S | Head of engineering | 90 |
-| 43 | HG-43 | DL.SCM.2 | Keep feature branches short-lived | Low | S | Backend engineers | 90 |
-| 44 | HG-44 | REL12-BP04 | Test resiliency using chaos engineering | Low | M | Platform lead | 90 |
-| 45 | HG-45 | PERF01-BP06 | Use benchmarking to drive architectural decisions | Low | M | Backend engineers | 90 |
+| 20 | HG-20 | AG.SAD.3 | Treat pipelines as production resources | Medium | S | Platform lead | 60 |
+| 21 | HG-21 | O.CM.3 | Conduct post-incident analysis for continuous improvement | Medium | S | Head of engineering | 60 |
+| 22 | HG-22 | QA.ST.4 | Enhance source code security with static application security testing | Medium | S | Backend engineers | 60 |
+| 23 | HG-23 | QA.ST.6 | Validate third-party components using software composition analysis | Medium | S | Backend engineers | 60 |
+| 24 | HG-24 | OPS05-BP02 | Test and validate changes | Medium | M | Backend engineers | 60 |
+| 25 | HG-25 | OPS05-BP10 | Fully automate integration and deployment | Medium | M | Platform lead | 60 |
+| 26 | HG-26 | OPS06-BP03 | Employ safe deployment strategies | Medium | M | Platform lead | 60 |
+| 27 | HG-27 | SEC11-BP02 | Automate testing throughout the development and release lifecycle | Medium | M | Backend engineers | 60 |
+| 28 | HG-28 | PERF05-BP04 | Load test your workload | Medium | M | Backend engineers | 60 |
+| 29 | HG-29 | COST06-BP03 | Select resource type, size, and number automatically based on metrics | Medium | M | Platform lead | 60 |
+| 30 | HG-30 | DL.ADS.3 | Use staggered deployment and release strategies | Medium | M | Platform lead | 60 |
+| 31 | HG-31 | DL.CD.4 | Automate the entire deployment process | Medium | M | Platform lead | 60 |
+| 32 | HG-32 | DL.EAC.1 | Organize infrastructure as code for scale | Medium | M | Platform lead | 60 |
+| 33 | HG-33 | O.SI.3 | Instrument all systems for comprehensive telemetry data collection | Medium | M | Backend engineers | 60 |
+| 34 | HG-34 | OA.STD.6 | Provide teams ownership of the entire value stream for their product | Medium | M | Head of engineering | 60 |
+| 35 | HG-35 | QA.FT.1 | Ensure individual component functionality with unit tests | Medium | M | Backend engineers | 60 |
+| 36 | HG-36 | REL13-BP02 | Use defined recovery strategies to meet the recovery objectives | Medium | L | Platform lead | 90 |
+| 37 | HG-37 | OPS08-BP01 | Analyze workload metrics | Low | S | Head of engineering | 90 |
+| 38 | HG-38 | PERF02-BP03 | Collect compute-related metrics | Low | S | Platform lead | 60 |
+| 39 | HG-39 | COST02-BP05 | Implement cost controls | Low | S | Head of engineering | 90 |
+| 40 | HG-40 | COST04-BP03 | Decommission resources | Low | S | Platform lead | 90 |
+| 41 | HG-41 | COST07-BP01 | Perform pricing model analysis | Low | S | Head of engineering | 90 |
+| 42 | HG-42 | SUS02-BP01 | Scale workload infrastructure dynamically | Low | S | Platform lead | 90 |
+| 43 | HG-43 | SUS04-BP03 | Use policies to manage the lifecycle of your datasets | Low | S | Platform lead | 90 |
+| 44 | HG-44 | AG.CA.1 | Establish comprehensive audit trails | Low | S | Platform lead | 90 |
+| 45 | HG-45 | DL.CD.6 | Refine delivery pipelines using metrics for continuous improvement | Low | S | Head of engineering | 90 |
+| 46 | HG-46 | DL.SCM.2 | Keep feature branches short-lived | Low | S | Backend engineers | 90 |
+| 47 | HG-47 | OA.BCL.7 | Cultivate a psychologically-safe culture for experimentation | Low | S | Head of engineering | 90 |
+| 48 | HG-48 | REL12-BP04 | Test resiliency using chaos engineering | Low | M | Platform lead | 90 |
+| 49 | HG-49 | PERF01-BP06 | Use benchmarking to drive architectural decisions | Low | M | Backend engineers | 90 |
 
 <!-- END GENERATED: backlog -->
 
@@ -775,7 +823,7 @@ depends on.
 - HG-05 Automate testing and rollback (OPS06-BP04, High, M), Platform lead. After HG-10.
 - HG-09 Implement automatic rollbacks for failed deployments (DL.ADS.2, High, M), Platform lead. After HG-05.
 
-### Days 31 to 60 (24 items)
+### Days 31 to 60 (26 items)
 
 - HG-11 Use runbooks to perform procedures (OPS07-BP03, Medium, S), Platform lead.
 - HG-12 Use a process for event, incident, and problem management (OPS10-BP01, Medium, S), Head of engineering.
@@ -786,41 +834,47 @@ depends on.
 - HG-17 Develop incident management plans (SEC10-BP02, Medium, S), Head of engineering. After HG-12.
 - HG-18 Use automation when obtaining or scaling resources (REL07-BP01, Medium, S), Platform lead.
 - HG-19 Add organization information to cost and usage (COST03-BP02, Medium, S), Platform lead.
-- HG-20 Conduct post-incident analysis for continuous improvement (O.CM.3, Medium, S), Head of engineering. After HG-13.
-- HG-22 Validate third-party components using software composition analysis (QA.ST.6, Medium, S), Backend engineers.
-- HG-23 Test and validate changes (OPS05-BP02, Medium, M), Backend engineers.
-- HG-24 Fully automate integration and deployment (OPS05-BP10, Medium, M), Platform lead. After HG-23.
-- HG-25 Employ safe deployment strategies (OPS06-BP03, Medium, M), Platform lead. After HG-05.
-- HG-26 Automate testing throughout the development and release lifecycle (SEC11-BP02, Medium, M), Backend engineers.
-  After HG-23.
-- HG-21 Enhance source code security with static application security testing (QA.ST.4, Medium, S), Backend engineers.
-  After HG-26.
-- HG-27 Load test your workload (PERF05-BP04, Medium, M), Backend engineers.
-- HG-29 Use staggered deployment and release strategies (DL.ADS.3, Medium, M), Platform lead. After HG-25.
-- HG-30 Automate the entire deployment process (DL.CD.4, Medium, M), Platform lead. After HG-24.
-- HG-31 Organize infrastructure as code for scale (DL.EAC.1, Medium, M), Platform lead.
-- HG-32 Instrument all systems for comprehensive telemetry data collection (O.SI.3, Medium, M), Backend engineers. After
+- HG-20 Treat pipelines as production resources (AG.SAD.3, Medium, S), Platform lead. After HG-06.
+- HG-21 Conduct post-incident analysis for continuous improvement (O.CM.3, Medium, S), Head of engineering. After HG-13.
+- HG-23 Validate third-party components using software composition analysis (QA.ST.6, Medium, S), Backend engineers.
+- HG-24 Test and validate changes (OPS05-BP02, Medium, M), Backend engineers.
+- HG-25 Fully automate integration and deployment (OPS05-BP10, Medium, M), Platform lead. After HG-24.
+- HG-26 Employ safe deployment strategies (OPS06-BP03, Medium, M), Platform lead. After HG-05.
+- HG-27 Automate testing throughout the development and release lifecycle (SEC11-BP02, Medium, M), Backend engineers.
+  After HG-24.
+- HG-22 Enhance source code security with static application security testing (QA.ST.4, Medium, S), Backend engineers.
+  After HG-27.
+- HG-28 Load test your workload (PERF05-BP04, Medium, M), Backend engineers.
+- HG-30 Use staggered deployment and release strategies (DL.ADS.3, Medium, M), Platform lead. After HG-26.
+- HG-31 Automate the entire deployment process (DL.CD.4, Medium, M), Platform lead. After HG-25.
+- HG-32 Organize infrastructure as code for scale (DL.EAC.1, Medium, M), Platform lead.
+- HG-33 Instrument all systems for comprehensive telemetry data collection (O.SI.3, Medium, M), Backend engineers. After
   HG-07.
-- HG-33 Ensure individual component functionality with unit tests (QA.FT.1, Medium, M), Backend engineers. After HG-23.
-- HG-36 Collect compute-related metrics (PERF02-BP03, Low, S), Platform lead. Moved forward because later work depends
+- HG-34 Provide teams ownership of the entire value stream for their product (OA.STD.6, Medium, M), Head of engineering.
+  After HG-31.
+- HG-35 Ensure individual component functionality with unit tests (QA.FT.1, Medium, M), Backend engineers. After HG-24.
+- HG-38 Collect compute-related metrics (PERF02-BP03, Low, S), Platform lead. Moved forward because later work depends
   on it.
-- HG-28 Select resource type, size, and number automatically based on metrics (COST06-BP03, Medium, M), Platform lead.
-  After HG-36.
+- HG-29 Select resource type, size, and number automatically based on metrics (COST06-BP03, Medium, M), Platform lead.
+  After HG-38.
 
-### Days 61 to 90 (11 items)
+### Days 61 to 90 (13 items)
 
-- HG-34 Use defined recovery strategies to meet the recovery objectives (REL13-BP02, Medium, L), Platform lead. After
+- HG-36 Use defined recovery strategies to meet the recovery objectives (REL13-BP02, Medium, L), Platform lead. After
   HG-04, HG-03.
-- HG-35 Analyze workload metrics (OPS08-BP01, Low, S), Head of engineering. After HG-10.
-- HG-37 Implement cost controls (COST02-BP05, Low, S), Head of engineering.
-- HG-38 Decommission resources (COST04-BP03, Low, S), Platform lead.
-- HG-39 Perform pricing model analysis (COST07-BP01, Low, S), Head of engineering. After HG-28.
-- HG-40 Scale workload infrastructure dynamically (SUS02-BP01, Low, S), Platform lead. After HG-18.
-- HG-41 Use policies to manage the lifecycle of your datasets (SUS04-BP03, Low, S), Platform lead.
-- HG-42 Refine delivery pipelines using metrics for continuous improvement (DL.CD.6, Low, S), Head of engineering.
-- HG-43 Keep feature branches short-lived (DL.SCM.2, Low, S), Backend engineers.
-- HG-44 Test resiliency using chaos engineering (REL12-BP04, Low, M), Platform lead. After HG-07, HG-08.
-- HG-45 Use benchmarking to drive architectural decisions (PERF01-BP06, Low, M), Backend engineers. After HG-27.
+- HG-37 Analyze workload metrics (OPS08-BP01, Low, S), Head of engineering. After HG-10.
+- HG-39 Implement cost controls (COST02-BP05, Low, S), Head of engineering.
+- HG-40 Decommission resources (COST04-BP03, Low, S), Platform lead.
+- HG-41 Perform pricing model analysis (COST07-BP01, Low, S), Head of engineering. After HG-29.
+- HG-42 Scale workload infrastructure dynamically (SUS02-BP01, Low, S), Platform lead. After HG-18.
+- HG-43 Use policies to manage the lifecycle of your datasets (SUS04-BP03, Low, S), Platform lead.
+- HG-44 Establish comprehensive audit trails (AG.CA.1, Low, S), Platform lead. After HG-15.
+- HG-45 Refine delivery pipelines using metrics for continuous improvement (DL.CD.6, Low, S), Head of engineering.
+- HG-46 Keep feature branches short-lived (DL.SCM.2, Low, S), Backend engineers.
+- HG-47 Cultivate a psychologically-safe culture for experimentation (OA.BCL.7, Low, S), Head of engineering. After
+  HG-13.
+- HG-48 Test resiliency using chaos engineering (REL12-BP04, Low, M), Platform lead. After HG-07, HG-08.
+- HG-49 Use benchmarking to drive architectural decisions (PERF01-BP06, Low, M), Backend engineers. After HG-28.
 
 <!-- END GENERATED: roadmap -->
 
@@ -831,14 +885,14 @@ depends on.
 | ID | Kind | Description | Source file | Cited by |
 | --- | --- | --- | --- | --- |
 | EV-01 | interview | Scoping workshop with the head of engineering and the platform lead | - | 3 |
-| EV-02 | interview | Two-hour architecture and operations interview with the platform lead and two backend engineers | - | 7 |
+| EV-02 | interview | Two-hour architecture and operations interview with the platform lead and two backend engineers | - | 9 |
 | EV-03 | interview | Support interview with the customer support lead about outages and how customers report them | - | 2 |
-| EV-04 | review | Read-only review of the GitHub Actions workflows in the storefront and orders repositories | - | 16 |
-| EV-05 | export | IAM credential report for the production account (synthetic extract) | data/synthetic/exports/credential-report.csv | 3 |
-| EV-06 | export | Deployment history for the observation window (synthetic extract) | data/synthetic/exports/deployments.csv | 7 |
-| EV-07 | export | Incident log for the observation window (synthetic extract) | data/synthetic/exports/incidents.csv | 8 |
+| EV-04 | review | Read-only review of the GitHub Actions workflows in the storefront and orders repositories | - | 17 |
+| EV-05 | export | IAM credential report for the production account (synthetic extract) | data/synthetic/exports/credential-report.csv | 4 |
+| EV-06 | export | Deployment history for the observation window (synthetic extract) | data/synthetic/exports/deployments.csv | 8 |
+| EV-07 | export | Incident log for the observation window (synthetic extract) | data/synthetic/exports/incidents.csv | 9 |
 | EV-08 | review | Read-only review of the Terraform repository, its state layout and drift against the account | - | 5 |
-| EV-09 | review | Read-only review of CloudWatch dashboards, alarms and log groups | - | 7 |
+| EV-09 | review | Read-only review of CloudWatch dashboards, alarms and log groups | - | 8 |
 | EV-10 | review | Read-only review of the Aurora cluster, AWS Backup plans and restore history | - | 6 |
 | EV-11 | review | Read-only review of Cost Explorer by service and by tag, and of AWS Budgets | - | 5 |
 | EV-12 | review | Read-only review of AWS Security Hub and Amazon Inspector findings | - | 4 |

@@ -1,15 +1,15 @@
 {
   "devops": {
-    "best_practices": 13,
-    "gaps": 11,
+    "best_practices": 17,
+    "gaps": 15,
     "gaps_by_risk": {
       "high": 1,
-      "low": 2,
-      "medium": 8
+      "low": 4,
+      "medium": 10
     },
     "hri": 1,
-    "mri": 6,
-    "questions": 9,
+    "mri": 8,
+    "questions": 13,
     "score_pct": 38
   },
   "framework": {
@@ -161,19 +161,21 @@
       "score_pct": 50
     },
     {
-      "applicable": 13,
+      "applicable": 17,
       "hri": 1,
       "key": "devops",
       "lens": "devops",
       "maturity_level": 1,
       "maturity_name": "Initial",
       "met": 2,
-      "mri": 6,
+      "mri": 8,
       "name": "DevOps lens",
       "not_applicable": 0,
-      "not_met": 5,
-      "partial": 6,
+      "not_met": 6,
+      "partial": 9,
       "question_risk": {
+        "AG.CA": "none",
+        "AG.SAD": "medium",
         "DL.ADS": "high",
         "DL.CD": "medium",
         "DL.CI": "none",
@@ -181,6 +183,8 @@
         "DL.SCM": "none",
         "O.CM": "medium",
         "O.SI": "medium",
+        "OA.BCL": "none",
+        "OA.STD": "medium",
         "QA.FT": "medium",
         "QA.ST": "medium"
       },

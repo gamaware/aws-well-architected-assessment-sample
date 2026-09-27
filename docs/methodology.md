@@ -12,8 +12,8 @@ this repository reproduces it. The client, Harbor Goods, is fictional. The proce
 - **The DevOps lens.** The AWS Well-Architected DevOps Guidance organizes practices into five sagas:
   organizational adoption (OA), development lifecycle (DL), quality assurance (QA), automated governance (AG) and
   observability (O). It appears as the "DevOps" lens in the Well-Architected Tool's lens catalog. This sample
-  records findings from the development lifecycle, quality assurance and observability sagas; a full engagement also
-  interviews for organizational adoption and automated governance.
+  records findings from all five sagas, covering the capabilities most relevant to the workload; a full engagement
+  walks through every capability that applies.
 - **Best-practice IDs.** Framework IDs follow the `OPS05-BP01` pattern (pillar, question, best practice). DevOps
   Guidance IDs follow the `[DL.CI.1]` pattern (saga, capability, best practice); the data stores them without
   brackets. The titles match the current AWS documentation word for word.
