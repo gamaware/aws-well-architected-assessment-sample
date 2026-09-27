@@ -30,7 +30,7 @@ items:
     title: Integrate code changes regularly and frequently
     status: met
     evidence: [EV-04]
-    observation: Engineers merge small pull requests to main several times a week.
+    observation: Engineers merge small pull requests to main more than twice a week.
   - id: DL.CI.2
     question: DL.CI
     title: Trigger builds automatically upon source code modifications
@@ -104,8 +104,8 @@ items:
     owner: Platform lead
     evidence: [EV-08]
     observation: >-
-      Terraform covers the network, ECS and Aurora, but ElastiCache, the alarms and the Lambda worker were built in
-      the console, and one state file holds production and staging.
+      Terraform covers the network, ECS and Aurora, but the team built ElastiCache, the alarms and the Lambda worker
+      in the console, and one state file holds production and staging.
     recommendation: >-
       Import the console-built resources, split state per environment and per stack, and run plan on every pull
       request with drift detection each night.
@@ -155,8 +155,8 @@ items:
     depends_on: [REL06-BP01]
     evidence: [EV-09]
     observation: >-
-      Services write unstructured logs; there are no traces, so a slow checkout cannot be followed across
-      storefront-web, orders-api and the database.
+      Services write unstructured logs and no traces, so nobody can follow a slow checkout across storefront-web,
+      orders-api and the database.
     recommendation: >-
       Adopt structured JSON logs with a request ID and add OpenTelemetry tracing through the AWS Distro for
       OpenTelemetry collector to AWS X-Ray.
@@ -170,6 +170,6 @@ items:
     depends_on: [OPS11-BP02]
     evidence: [EV-07]
     observation: >-
-      {incidents.postmortems} of {incidents.total} incidents have an analysis, and no action from them was tracked
+      {incidents.postmortems} of {incidents.total} incidents have an analysis, and nobody tracked any action from them
       to completion.
     recommendation: Delivered by OPS11-BP02; review open actions in the weekly operations review.

@@ -17,8 +17,8 @@ between reviews.
   score is the share of points earned, rounded half up to a whole percentage.
 - The assessor rates every gap high, medium or low with a likelihood and impact matrix
   ([methodology](../methodology.md#rating-risk)).
-- A question is a high-risk issue when any gap under it is rated high, and a medium-risk issue when its worst gap is
-  medium. Low-rated gaps are improvement items, as in the Tool.
+- A question is a high-risk issue when the assessor rates any gap under it high, and a medium-risk issue when its
+  worst gap is medium. Low-rated gaps are improvement items, as in the Tool.
 
 ## Consequences
 
@@ -36,5 +36,5 @@ against it.
 
 ## Notes
 
-Weighting best practices by AWS's documented risk level was rejected: the assessor's rating for this workload is
-what drives priority, and mixing two scales confuses readers.
+The team rejected weighting best practices by AWS's documented risk level: the assessor's rating for this workload
+is what drives priority, and mixing two scales confuses readers.

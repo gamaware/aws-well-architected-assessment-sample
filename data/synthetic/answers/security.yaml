@@ -44,7 +44,7 @@ items:
     evidence: [EV-02, EV-13]
     observation: >-
       The database password sits in AWS Secrets Manager, but the logistics partner API token is a plain-text ECS
-      environment variable and was rotated by hand after it expired (INC-105).
+      environment variable, and the team rotated it by hand after it expired (INC-105).
     recommendation: >-
       Move the partner token to Secrets Manager, inject it through the task definition `secrets` field, and set a
       rotation reminder or automatic rotation.
@@ -96,7 +96,7 @@ items:
     title: Enforce encryption at rest
     status: met
     evidence: [EV-10, EV-12]
-    observation: Aurora, ElastiCache, SQS and S3 are encrypted with AWS KMS keys; default EBS encryption is on.
+    observation: AWS KMS keys encrypt Aurora, ElastiCache, SQS and S3; default EBS encryption is on.
   - id: SEC10-BP02
     question: SEC10
     title: Develop incident management plans
@@ -106,7 +106,8 @@ items:
     owner: Head of engineering
     depends_on: [OPS10-BP01]
     evidence: [EV-02]
-    observation: There is no security incident plan; the team did not know who would decide to rotate every credential.
+    observation: >-
+      The team has no security incident plan and did not know who would decide to rotate every credential.
     recommendation: >-
       Write a one-page security incident plan (roles, contacts, first actions for a leaked key) and rehearse it once
       as a tabletop exercise.

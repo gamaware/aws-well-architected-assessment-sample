@@ -42,5 +42,6 @@ markdownlint, actionlint, zizmor, shellcheck, shellharden, ruff, conventional-pr
 
 ## CI and code review
 
-`.github/workflows/ci.yml` calls the shared workflows in `gamaware/.github` and runs `make verify` and `make pdf`.
+`.github/workflows/ci.yml` calls the shared workflows in `gamaware/.github` (docs, actions, secrets, security,
+report) and runs `make verify`. `.github/workflows/scorecard.yml` runs OpenSSF Scorecard on `main`.
 CodeRabbit (`.coderabbit.yaml`) and GitHub Copilot (`.github/copilot-instructions.md`) review every pull request.

@@ -1,7 +1,7 @@
 # Harbor Goods: AWS Well-Architected and DevOps assessment
 
 > **Fictional sample.** Harbor Goods is an invented company. Every account ID, finding and figure in this report
-> comes from the synthetic data in `data/synthetic/`. No real account or client was assessed.
+> comes from the synthetic data in `data/synthetic/`. The assessor reviewed no real account or client.
 
 | Item | Detail |
 | --- | --- |
@@ -13,7 +13,7 @@
 | Access used | Read-only |
 | Revision | 1.0 |
 
-Tables between `BEGIN GENERATED` and `END GENERATED` markers in the source are produced by `make evidence` from the
+Tables between `BEGIN GENERATED` and `END GENERATED` markers in the source come from `make evidence` and the
 data. The tests in `tests/test_report.py` recompute them.
 
 ## 1. Executive summary
@@ -69,12 +69,14 @@ The assessment followed the method in [`docs/methodology.md`](../docs/methodolog
 1. A scoping workshop agreed the workload, the people to interview and read-only access.
 2. A two-hour interview walked through each best practice in scope.
 3. Read-only reviews and exports checked each answer against what is running (section 7 lists the evidence).
-4. Every answer was recorded against its best practice with a status, a risk rating, an effort estimate and an owner.
+4. The assessor recorded every answer against its best practice with a status, a risk rating, an effort estimate
+   and an owner.
 5. Scripts scored the answers, built the backlog and scheduled the roadmap from fixed rules.
 
 Scores work as follows. A best practice earns 1 when met, 0.5 when partial and 0 when not met; the pillar score
-is the share earned. A question is a high-risk issue (HRI) when any gap under it is rated high, and a medium-risk
-issue (MRI) when its worst gap is medium, which mirrors how the Well-Architected Tool reports risk per question.
+is the share earned. A question is a high-risk issue (HRI) when the assessor rates any gap under it high, and a
+medium-risk issue (MRI) when its worst gap is medium, which mirrors how the Well-Architected Tool reports risk per
+question.
 Maturity levels run from 1 (Initial, below 40%) to 4 (Optimized, 80% and above).
 
 ## 3. Scores
@@ -105,7 +107,7 @@ Maturity levels run from 1 (Initial, below 40%) to 4 (Optimized, 80% and above).
 <!-- END GENERATED: devops-scores -->
 
 Reliability and security carry most of the high risks. Cost optimization scores low but holds no high risk; the
-gaps there are oversized tasks, idle resources and On-Demand pricing.
+gaps there are tasks larger than their load, idle resources and On-Demand pricing.
 
 ## 4. Findings by pillar
 
@@ -172,8 +174,8 @@ and keep the manual approval as the only human action.
 
 Status: Not met. Risk: High. Effort: S. Owner: Platform lead. Backlog: HG-01. Evidence: EV-02, EV-06, EV-07.
 
-No change has a written rollback plan. 3 of 47 deployments in the window were rolled back by hand, and the longest
-incident, INC-106, lasted 185 minutes because its schema change could not be reversed.
+No change has a written rollback plan. Engineers rolled back 3 of 47 deployments in the window by hand, and the longest
+incident, INC-106, lasted 185 minutes because nobody could reverse its schema change.
 
 Recommendation: Add a rollback section to the pull request template, require backward-compatible (expand and contract)
 schema changes, and keep the previous task definition revision ready to redeploy.
@@ -201,7 +203,7 @@ CloudWatch alarm on the checkout KPI that stops and reverts the deployment.
 
 Status: Partial. Risk: Medium. Effort: S. Owner: Platform lead. Backlog: HG-11. Evidence: EV-02.
 
-Two runbooks exist in a wiki (restart a service, rotate the logistics API token) and neither was used during INC-105.
+Two runbooks exist in a wiki (restart a service, rotate the logistics API token), and nobody used either during INC-105.
 Database failover and restore have no runbook.
 
 Recommendation: Write runbooks for the five most frequent procedures, keep them next to the code, and link each alarm to
@@ -219,8 +221,8 @@ Recommendation: Hold a 30-minute weekly operations review of the KPI dashboard a
 
 Status: Partial. Risk: Medium. Effort: S. Owner: Head of engineering. Backlog: HG-12. Evidence: EV-03, EV-07.
 
-Incidents are handled in a chat channel with no severity definitions or incident lead. 3 of 7 incidents in the window
-were first reported by customers.
+The team handles incidents in a chat channel with no severity definitions or incident lead. 3 of 7 incidents in the
+window were first reported by customers.
 
 Recommendation: Define three severity levels, an incident lead role and a status page update rule, and page the on-call
 engineer from CloudWatch alarms.
@@ -272,7 +274,7 @@ production environment, then deactivate and delete the key.
 Status: Partial. Risk: Medium. Effort: S. Owner: Backend engineers. Backlog: HG-14. Evidence: EV-02, EV-13.
 
 The database password sits in AWS Secrets Manager, but the logistics partner API token is a plain-text ECS environment
-variable and was rotated by hand after it expired (INC-105).
+variable, and the team rotated it by hand after it expired (INC-105).
 
 Recommendation: Move the partner token to Secrets Manager, inject it through the task definition `secrets` field, and
 set a rotation reminder or automatic rotation.
@@ -310,13 +312,13 @@ image, and fail the pipeline on critical findings that have a fix.
 
 Status: Met. Evidence: EV-10, EV-12.
 
-Aurora, ElastiCache, SQS and S3 are encrypted with AWS KMS keys; default EBS encryption is on.
+AWS KMS keys encrypt Aurora, ElastiCache, SQS and S3; default EBS encryption is on.
 
 #### SEC10-BP02 Develop incident management plans
 
 Status: Not met. Risk: Medium. Effort: S. Owner: Head of engineering. Backlog: HG-17. Evidence: EV-02.
 
-There is no security incident plan; the team did not know who would decide to rotate every credential.
+The team has no security incident plan and did not know who would decide to rotate every credential.
 
 Recommendation: Write a one-page security incident plan (roles, contacts, first actions for a leaked key) and rehearse
 it once as a tabletop exercise.
@@ -393,7 +395,7 @@ with automatic failover on ElastiCache.
 
 Status: Not met. Risk: Low. Effort: M. Owner: Platform lead. Backlog: HG-44. Evidence: EV-02.
 
-No failure has ever been injected on purpose.
+The team has never injected a failure on purpose.
 
 Recommendation: Once alarms and Multi-AZ are in place, run an AWS Fault Injection Service experiment in staging that
 stops the Aurora writer, with a written hypothesis and stop conditions.
@@ -411,7 +413,7 @@ workload's operations document.
 
 Status: Not met. Risk: Medium. Effort: L. Owner: Platform lead. Backlog: HG-34. Evidence: EV-10.
 
-There is no disaster recovery strategy beyond backups in the same Region.
+The workload has no disaster recovery strategy beyond backups in the same Region.
 
 Recommendation: Choose a strategy that meets the agreed objectives (backup and restore with cross-Region copies is
 likely enough), then document and test it.
@@ -432,7 +434,7 @@ likely enough), then document and test it.
 
 Status: Not met. Risk: Low. Effort: M. Owner: Backend engineers. Backlog: HG-45. Evidence: EV-02.
 
-Instance and task sizes were chosen at launch and never compared with alternatives.
+The team chose instance and task sizes at launch and never compared them with alternatives.
 
 Recommendation: Benchmark orders-api on Graviton-based Fargate tasks against the current x86 tasks with the load test
 from PERF05-BP04, and keep the faster or cheaper option.
@@ -447,7 +449,7 @@ Containers on Fargate and an event-driven Lambda worker fit the workload's traff
 
 Status: Partial. Risk: Low. Effort: S. Owner: Platform lead. Backlog: HG-36. Evidence: EV-09.
 
-ECS Container Insights is off, so per-task memory is invisible; the INC-101 memory exhaustion was found in logs.
+ECS Container Insights is off, so per-task memory is invisible; the team found the INC-101 memory exhaustion in logs.
 
 Recommendation: Enable Container Insights on the production cluster and add memory utilization to the dashboard.
 
@@ -588,7 +590,7 @@ Recommendation: Merge to main behind feature flags and deploy from main, retirin
 
 Status: Met. Evidence: EV-04.
 
-Engineers merge small pull requests to main several times a week.
+Engineers merge small pull requests to main more than twice a week.
 
 #### DL.CI.2 Trigger builds automatically upon source code modifications
 
@@ -638,7 +640,7 @@ release risky features behind flags.
 
 Status: Partial. Risk: Medium. Effort: M. Owner: Platform lead. Backlog: HG-31. Evidence: EV-08.
 
-Terraform covers the network, ECS and Aurora, but ElastiCache, the alarms and the Lambda worker were built in the
+Terraform covers the network, ECS and Aurora, but the team built ElastiCache, the alarms and the Lambda worker in the
 console, and one state file holds production and staging.
 
 Recommendation: Import the console-built resources, split state per environment and per stack, and run plan on every
@@ -674,8 +676,8 @@ Recommendation: Add dependency scanning to pull requests and enable Dependabot s
 
 Status: Partial. Risk: Medium. Effort: M. Owner: Backend engineers. Backlog: HG-32. Evidence: EV-09.
 
-Services write unstructured logs; there are no traces, so a slow checkout cannot be followed across storefront-web,
-orders-api and the database.
+Services write unstructured logs and no traces, so nobody can follow a slow checkout across storefront-web, orders-api
+and the database.
 
 Recommendation: Adopt structured JSON logs with a request ID and add OpenTelemetry tracing through the AWS Distro for
 OpenTelemetry collector to AWS X-Ray.
@@ -684,7 +686,7 @@ OpenTelemetry collector to AWS X-Ray.
 
 Status: Partial. Risk: Medium. Effort: S. Owner: Head of engineering. Backlog: HG-20. Evidence: EV-07.
 
-2 of 7 incidents have an analysis, and no action from them was tracked to completion.
+2 of 7 incidents have an analysis, and nobody tracked any action from them to completion.
 
 Recommendation: Delivered by OPS11-BP02; review open actions in the weekly operations review.
 
@@ -692,7 +694,7 @@ Recommendation: Delivered by OPS11-BP02; review open actions in the weekly opera
 
 ## 5. Prioritized backlog
 
-Items are ranked by risk, then by effort so quick wins lead each risk band. Effort is S (up to two days), M (up to
+The scripts rank items by risk, then by effort so quick wins lead each risk band. Effort is S (up to two days), M (up to
 two weeks) or L (more than two weeks) for one engineer. The full backlog, with dependencies and recommendations, is
 in [`evidence/backlog.csv`](../evidence/backlog.csv) for import into a tracker, and in
 [`evidence/backlog.md`](../evidence/backlog.md).
@@ -847,7 +849,7 @@ depends on.
 ## 8. Limits and next steps
 
 - The findings describe the workload during a 90-day observation window. A re-review after the first 90 days
-  should confirm which high risks are closed.
+  should confirm which high risks the team has closed.
 - The review read configuration and history; it did not test failover, run load tests or scan for vulnerabilities
   itself. Those are backlog items.
 - In an engagement, the answers are also recorded in the AWS Well-Architected Tool in the client's own account, and
@@ -856,4 +858,4 @@ depends on.
 ---
 
 *Fictional sample prepared to show the format of an AWS Well-Architected and DevOps assessment. Harbor Goods, its
-people, accounts and incidents are invented. Generated from `data/synthetic/` by the scripts in `scripts/`.*
+people, accounts and incidents are fictional. Generated from `data/synthetic/` by the scripts in `scripts/`.*

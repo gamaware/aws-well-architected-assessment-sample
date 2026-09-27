@@ -7,8 +7,8 @@ Accepted
 ## Context
 
 An assessment report quotes the same numbers many times: pillar scores, risk counts, backlog size, delivery
-metrics. When the report is typed by hand, a late change to one answer leaves stale numbers elsewhere, and a reader
-cannot tell how a score was reached. Clients also want the backlog in a tracker, not only in a PDF.
+metrics. When someone types the report by hand, a late change to one answer leaves stale numbers elsewhere, and a
+reader cannot tell how the assessor reached a score. Clients also want the backlog in a tracker, not only in a PDF.
 
 ## Decision
 
@@ -28,7 +28,7 @@ evidence files. Narrative prose outside the markers stays hand-written and avoid
 ## Compliance
 
 `make check` (part of `make verify` and CI) regenerates every output in memory and fails when a committed file
-differs. `tests/test_report.py` fails if a placeholder is left unfilled or the report cites unknown evidence.
+differs. `tests/test_report.py` fails if a placeholder stays unfilled or the report cites unknown evidence.
 
 ## Notes
 

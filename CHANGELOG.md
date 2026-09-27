@@ -1,7 +1,7 @@
 # Changelog
 
 All notable changes to this sample. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
-The assessment is a sample deliverable, so releases are numbered report revisions rather than a versioned API.
+The assessment is a sample deliverable, so each release is a numbered report revision rather than a versioned API.
 
 ## Unreleased
 

@@ -78,7 +78,7 @@ items:
     owner: Platform lead
     depends_on: [REL06-BP01, REL10-BP01]
     evidence: [EV-02]
-    observation: No failure has ever been injected on purpose.
+    observation: The team has never injected a failure on purpose.
     recommendation: >-
       Once alarms and Multi-AZ are in place, run an AWS Fault Injection Service experiment in staging that stops the
       Aurora writer, with a written hypothesis and stop conditions.
@@ -103,7 +103,7 @@ items:
     owner: Platform lead
     depends_on: [REL13-BP01, REL09-BP04]
     evidence: [EV-10]
-    observation: There is no disaster recovery strategy beyond backups in the same Region.
+    observation: The workload has no disaster recovery strategy beyond backups in the same Region.
     recommendation: >-
       Choose a strategy that meets the agreed objectives (backup and restore with cross-Region copies is likely
       enough), then document and test it.

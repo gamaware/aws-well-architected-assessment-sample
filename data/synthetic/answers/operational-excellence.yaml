@@ -74,9 +74,9 @@ items:
     owner: Platform lead
     evidence: [EV-02, EV-06, EV-07]
     observation: >-
-      No change has a written rollback plan. {delivery.rollbacks} of {delivery.deployments} deployments in the
-      window were rolled back by hand, and the longest incident, {incidents.longest_incident}, lasted
-      {incidents.longest_minutes_to_restore} minutes because its schema change could not be reversed.
+      No change has a written rollback plan. Engineers rolled back {delivery.rollbacks} of {delivery.deployments}
+      deployments in the window by hand, and the longest incident, {incidents.longest_incident}, lasted
+      {incidents.longest_minutes_to_restore} minutes because nobody could reverse its schema change.
     recommendation: >-
       Add a rollback section to the pull request template, require backward-compatible (expand and contract) schema
       changes, and keep the previous task definition revision ready to redeploy.
@@ -117,7 +117,7 @@ items:
     owner: Platform lead
     evidence: [EV-02]
     observation: >-
-      Two runbooks exist in a wiki (restart a service, rotate the logistics API token) and neither was used during
+      Two runbooks exist in a wiki (restart a service, rotate the logistics API token), and nobody used either during
       INC-105. Database failover and restore have no runbook.
     recommendation: >-
       Write runbooks for the five most frequent procedures, keep them next to the code, and link each alarm to its
@@ -142,8 +142,8 @@ items:
     owner: Head of engineering
     evidence: [EV-03, EV-07]
     observation: >-
-      Incidents are handled in a chat channel with no severity definitions or incident lead. {incidents.customer_detected}
-      of {incidents.total} incidents in the window were first reported by customers.
+      The team handles incidents in a chat channel with no severity definitions or incident lead.
+      {incidents.customer_detected} of {incidents.total} incidents in the window were first reported by customers.
     recommendation: >-
       Define three severity levels, an incident lead role and a status page update rule, and page the on-call
       engineer from CloudWatch alarms.

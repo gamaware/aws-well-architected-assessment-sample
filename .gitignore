@@ -22,3 +22,6 @@ live-output/
 .claude-flow/
 .claude/settings.local.json
 build/
+
+# Vale packages (downloaded by vale sync)
+styles/

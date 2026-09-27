@@ -23,15 +23,15 @@ prerequisite after the work that needs it.
 
 - The plan never schedules work before its prerequisites.
 - Some low or medium items appear in early buckets; the roadmap marks them "moved forward" so the reason is visible.
-- The rules ignore team capacity. The first 30 days can be crowded, and the readout adjusts them with the team.
+- The rules ignore team capacity. The first 30 days can fill up, and the readout adjusts them with the team.
 
 ## Compliance
 
-`tests/test_backlog.py` covers the ordering, the bucket table, chains of dependencies and an item needed by
-several others, and checks that no roadmap item comes before its dependencies. `tests/test_report.py` recomputes
+`tests/test_backlog.py` covers the ordering, the bucket table, chains of dependencies and an item that two
+others need, and checks that no roadmap item comes before its dependencies. `tests/test_report.py` recomputes
 the order and every `roadmap_days` value in `evidence/backlog.csv` with the independent reference implementation.
 
 ## Notes
 
-Pushing dependants later instead of pulling dependencies forward was rejected: it delayed high-risk fixes behind
-small medium-risk tasks, the opposite of what the ranking asks for.
+The team rejected pushing dependants later instead of pulling dependencies forward: it delayed high-risk fixes
+behind small medium-risk tasks, the opposite of what the ranking asks for.

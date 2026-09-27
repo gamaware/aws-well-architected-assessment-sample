@@ -23,9 +23,9 @@ and creates a resource.
 ## Consequences
 
 - Contributors and reviewers never need AWS access.
-- The live check covers the framework lens only; DevOps lens titles are checked against the published DevOps
-  Guidance by review, not by the live test.
-- A title that AWS renames is caught only when the live test is run.
+- The live check covers the framework lens only; a reviewer checks DevOps lens titles against the published DevOps
+  Guidance, not the live test.
+- Only a run of the live test catches a title that AWS renames.
 
 ## Compliance
 
@@ -34,5 +34,5 @@ script's matching logic against a fake Tool client in every CI run.
 
 ## Notes
 
-Using the Tool's exported JSON as the source of truth was rejected: an export from a real account cannot be
-published, and a hand-made one would prove nothing.
+The team rejected the Tool's exported JSON as the source of truth: nobody can publish an export from a real
+account, and a hand-made one would prove nothing.

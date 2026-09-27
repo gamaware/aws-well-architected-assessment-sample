@@ -12,9 +12,9 @@ risk-rated backlog, a 30/60/90-day roadmap and a client report, all generated fr
 ## Executive summary
 
 Harbor Goods, a fictional mid-size retailer, asked for a review of `storefront-orders`, the workload behind its
-online store. The team deploys several times a week, and recovery from a bad release is slow. Releases reach every
-user at once, nothing checks them after they land, CI deploys with a long-lived administrator key, and nobody has
-restored the orders database from a backup.
+online store. The team deploys more than twice a week, and recovery from a bad release is slow. Releases reach
+every user at once, nothing checks them after they land, CI deploys with a long-lived administrator key, and nobody
+has restored the orders database from a backup.
 
 <!-- BEGIN GENERATED: headline -->
 
@@ -46,7 +46,8 @@ The sample demonstrates:
 - Findings traced to evidence: interviews, read-only exports and reviews, each with an ID the report cites.
 - Scoring, high-risk and medium-risk issue counts, backlog ranking and roadmap scheduling from written rules
   ([methodology](docs/methodology.md), [ADRs](docs/adr/README.md)).
-- A report whose every number is regenerated from the data and recomputed by an independent test implementation.
+- A report in which the scripts regenerate every number from the data and an independent test implementation
+  recomputes it.
 
 ## Inspect the deliverable
 
@@ -57,7 +58,7 @@ The sample demonstrates:
 | [`evidence/backlog.csv`](evidence/backlog.csv) | Risk-rated backlog ready to import into a tracker |
 | [`evidence/roadmap.md`](evidence/roadmap.md) | The 30/60/90-day plan with dependencies |
 | [`data/synthetic/answers/`](data/synthetic/answers/) | The recorded answers, one file per pillar plus the DevOps lens |
-| [`docs/methodology.md`](docs/methodology.md) | How the assessment is run: interviews, evidence, the Well-Architected Tool, the DevOps lens |
+| [`docs/methodology.md`](docs/methodology.md) | How an assessment runs: interviews, evidence, the Well-Architected Tool, the DevOps lens |
 
 ## Scenario and acceptance criteria
 
@@ -68,12 +69,12 @@ GitHub Actions and Terraform. The head of engineering wants to know which risks 
 Constraints: one workload, read-only access, a two-hour interview, a 90-day observation window, and no changes to
 the client's accounts.
 
-The deliverable is accepted when:
+The client accepts the deliverable when:
 
 - every best practice in scope has a status and at least one evidence ID;
 - every gap has a risk rating, an effort estimate, an owner and a recommendation;
-- the backlog is ordered by risk and no roadmap item is planned before the work it depends on;
-- every number in the report can be reproduced from the data with one command (`make verify`).
+- the backlog follows risk order, and no roadmap item comes before the work it depends on;
+- one command (`make verify`) reproduces every number in the report from the data.
 
 ## Architecture
 
@@ -86,8 +87,8 @@ missing automated rollback, the single database writer and cache node, the untes
 
 ![Interviews and read-only exports become YAML answers, scored by wa_assess into evidence and a PDF report](docs/diagrams/assessment-flow.png)
 
-The second view shows how the deliverable is produced. Interview notes and read-only evidence become one answer per
-best practice in `data/synthetic/`. `scripts/wa_assess` validates the answers, scores them, ranks the backlog and
+The second view shows how the scripts produce the deliverable. Interview notes and read-only evidence become one answer
+per best practice in `data/synthetic/`. `scripts/wa_assess` validates the answers, scores them, ranks the backlog and
 schedules the roadmap, then writes `evidence/` and the tables in the report. Sources for both diagrams are in
 [`docs/diagrams/`](docs/diagrams/).
 
@@ -107,8 +108,8 @@ Expected output ends with:
 ok: 7 outputs match data/synthetic
 ```
 
-The first run takes under a minute while uv downloads packages; later runs take about five seconds. No AWS account
-is needed.
+The first run takes under a minute while uv downloads packages; later runs take about five seconds. The build
+needs no AWS account.
 
 Other targets: `make evidence` regenerates `evidence/` and the report tables after a data change, and `make pdf`
 renders `report/REPORT.pdf`.
@@ -149,7 +150,7 @@ docs/diagrams/         Diagram sources (.drawio) and exports (.png)
 | Gate | Where | Why |
 | --- | --- | --- |
 | `make verify` | CI and locally | The same command proves the report numbers follow from the data |
-| PDF build | CI (`report` job) | The client PDF must build from the Markdown source |
+| PDF build and evidence rerun | CI (shared `report`) | The report must render, and `make evidence` must reproduce `evidence/` |
 | markdownlint, link check, prose lint | CI (shared `lint-docs`) | The report and docs are the product |
 | actionlint, zizmor | CI (shared `lint-actions`) and pre-commit | Workflows stay least-privilege and pinned |
 | gitleaks, detect-secrets | CI (shared `secrets`) and pre-commit | No credentials in a public repository |
@@ -160,7 +161,7 @@ Workflows start from `permissions: {}`, pin actions to full commit SHAs, and nev
 
 ## Limits and production adaptations
 
-- Harbor Goods, its people, accounts, incidents and exports are invented. The findings show the format and the
+- Harbor Goods, its people, accounts, incidents and exports are fictional. The findings show the format and the
   reasoning, not the state of any real system.
 - The DevOps lens findings cover the development lifecycle, quality assurance and observability sagas. A full
   engagement also covers organizational adoption and automated governance.

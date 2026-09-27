@@ -1,6 +1,6 @@
 # Assessment methodology
 
-This page describes how the assessment in [`report/REPORT.md`](../report/REPORT.md) is run in an engagement and how
+This page describes how the assessment in [`report/REPORT.md`](../report/REPORT.md) runs in an engagement and how
 this repository reproduces it. The client, Harbor Goods, is fictional. The process is the same one used for real reviews.
 
 ## What the assessment covers
@@ -16,20 +16,20 @@ this repository reproduces it. The client, Harbor Goods, is fictional. The proce
   interviews for organizational adoption and automated governance.
 - **Best-practice IDs.** Framework IDs follow the `OPS05-BP01` pattern (pillar, question, best practice). DevOps
   Guidance IDs follow the `[DL.CI.1]` pattern (saga, capability, best practice); the data stores them without
-  brackets. Titles are copied from the current AWS documentation.
+  brackets. The titles match the current AWS documentation word for word.
 
 ## How an engagement runs
 
 | Step | What happens | Output |
 | --- | --- | --- |
 | 1. Kickoff and access | Agree the workload, the interviewees and the questions that matter most. The client grants read-only access (for example the `ReadOnlyAccess` managed policy through an IAM Identity Center permission set). The assessor confirms the access works before the interview. | Scope note, access check |
-| 2. Interview | A two-hour session with the workload owner, the platform lead and engineers walks through each best practice in scope. Answers are recorded as said, with the name of the role that gave them. | Interview notes (EV-01 to EV-03) |
-| 3. Evidence | Each answer is checked against what is running: read-only exports (IAM credential report, deployment history, incident log) and reviews of the pipeline, infrastructure code, monitoring, backups, costs and security findings. Where the evidence disagrees with the interview, the evidence wins and the finding says so. | Evidence register (EV-04 to EV-13) |
+| 2. Interview | A two-hour session with the workload owner, the platform lead and engineers walks through each best practice in scope. The assessor records answers as said, with the name of the role that gave them. | Interview notes (EV-01 to EV-03) |
+| 3. Evidence | The assessor checks each answer against what is running: read-only exports (IAM credential report, deployment history, incident log) and reviews of the pipeline, infrastructure code, monitoring, backups, costs and security findings. Where the evidence disagrees with the interview, the evidence wins and the finding says so. | Evidence register (EV-04 to EV-13) |
 | 4. Record in the Well-Architected Tool | The assessor creates the workload in the client's own account, applies the Well-Architected Framework lens and the DevOps lens, selects the best practices the evidence supports, and adds notes with evidence IDs. The Tool then reports high-risk and medium-risk issues per question. | Tool workload and milestone |
-| 5. Rate and plan | Every gap gets a risk rating, an effort estimate, an owner and a recommendation, then the backlog and roadmap are built from fixed rules (below). | Backlog, roadmap |
+| 5. Rate and plan | Every gap gets a risk rating, an effort estimate, an owner and a recommendation, then the scripts build the backlog and roadmap from fixed rules (below). | Backlog, roadmap |
 | 6. Readout | A walkthrough of the findings with the team, agreeing the order of work. The client keeps the report, the backlog file and the Tool record. | Report and PDF |
 
-The review never needs write access. In this repository steps 2 and 3 are represented by synthetic data, and step 4
+The review never needs write access. In this repository synthetic data stands in for steps 2 and 3, and step 4
 is optional through `make test-live`.
 
 ## Recording answers
@@ -43,8 +43,8 @@ Each best practice in scope is one entry in `data/synthetic/answers/<pillar>.yam
 | `effort` | For gaps only: `S` (up to two days), `M` (up to two weeks), `L` (more than two weeks) for one engineer |
 | `owner` | The role that should own the fix |
 | `evidence` | IDs from `data/synthetic/evidence.yaml` |
-| `depends_on` | Other gaps that must be closed first |
-| `observation`, `recommendation` | What was seen, and the change that closes the gap |
+| `depends_on` | Other gaps to close first |
+| `observation`, `recommendation` | What the assessor saw, and the change that closes the gap |
 
 Observations quote figures from the exports through placeholders such as `{delivery.rollbacks}`, which the scripts
 fill from `data/synthetic/exports/`, so the prose cannot drift from the evidence.
@@ -63,14 +63,14 @@ bad that would be for the business.
 
 ## Scoring rules
 
-These rules live in `scripts/wa_assess/scoring.py` and are recomputed independently by `tests/reference.py`.
+These rules live in `scripts/wa_assess/scoring.py` and `tests/reference.py` recomputes them independently.
 
-- A best practice earns 1 when met, 0.5 when partial and 0 when not met. Not applicable ones are left out.
+- A best practice earns 1 when met, 0.5 when partial and 0 when not met. Not applicable ones do not count.
 - A pillar score is the credit earned over the applicable best practices, rounded half up to a whole percentage.
 - The framework and DevOps lens totals pool all their best practices; they are not averages of pillar scores.
-- A question is a **high-risk issue (HRI)** when any gap under it is rated high, and a **medium-risk issue (MRI)**
-  when its worst gap is medium. Low-rated gaps are improvement items, not risks. This matches how the Tool counts
-  risks per question rather than per best practice.
+- A question is a **high-risk issue (HRI)** when the assessor rates any gap under it high, and a **medium-risk issue
+  (MRI)** when its worst gap is medium. Low-rated gaps are improvement items, not risks. This matches how the Tool
+  counts risks per question rather than per best practice.
 - Maturity levels: 1 Initial (below 40%), 2 Repeatable (40% to 59%), 3 Defined (60% to 79%), 4 Optimized (80% and
   above).
 
@@ -83,7 +83,7 @@ Tool's risk counts can therefore differ from the report's where the Tool's own r
 These rules live in `scripts/wa_assess/backlog.py`.
 
 1. Every gap becomes one backlog item.
-2. Items are ranked by risk (high, medium, low), then effort (S, M, L), then pillar order, then best-practice ID.
+2. The scripts rank items by risk (high, medium, low), then effort (S, M, L), then pillar order, then best-practice ID.
    Keys `HG-01`, `HG-02` and so on follow the rank.
 3. Each item gets a starting bucket:
 

@@ -15,7 +15,7 @@ items:
     owner: Backend engineers
     depends_on: [PERF05-BP04]
     evidence: [EV-02]
-    observation: Instance and task sizes were chosen at launch and never compared with alternatives.
+    observation: The team chose instance and task sizes at launch and never compared them with alternatives.
     recommendation: >-
       Benchmark orders-api on Graviton-based Fargate tasks against the current x86 tasks with the load test from
       PERF05-BP04, and keep the faster or cheaper option.
@@ -33,7 +33,9 @@ items:
     effort: S
     owner: Platform lead
     evidence: [EV-09]
-    observation: ECS Container Insights is off, so per-task memory is invisible; the INC-101 memory exhaustion was found in logs.
+    observation: >-
+      ECS Container Insights is off, so per-task memory is invisible; the team found the INC-101 memory exhaustion in
+      logs.
     recommendation: Enable Container Insights on the production cluster and add memory utilization to the dashboard.
   - id: PERF05-BP04
     question: PERF05
