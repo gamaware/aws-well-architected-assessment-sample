@@ -13,8 +13,4 @@ The assessment is a sample deliverable, so each release is a numbered report rev
   risk-rated backlog (CSV and Markdown) and a 30/60/90-day roadmap.
 - `report/REPORT.md` with generated tables, and `report/REPORT.pdf` rendered from it.
 - Tests that recompute the report numbers from the data, plus `make verify` and `make test-live`.
-- Methodology, ADRs, diagrams and CI.
-
-### To do
-
-- Pin the reusable workflows from `gamaware/.github` to a commit SHA instead of `@main`.
+- Methodology, ADRs, diagrams, the social preview and CI calling the shared workflows pinned to a commit SHA.

@@ -23,8 +23,8 @@ case "$FILE" in
     echo "Regenerate with: detect-secrets scan --baseline .secrets.baseline" >&2
     exit 2
     ;;
-  */docs/diagrams/*.svg | */docs/diagrams/*.png | */docs/assets/cover.png)
-    echo "Exported diagram or cover. Edit the source in docs/diagrams/ and re-export." >&2
+  */docs/diagrams/*.svg | */docs/diagrams/*.png | */docs/assets/cover.png | */docs/assets/social-preview.png)
+    echo "Exported image. Edit the source (docs/diagrams/*.drawio or docs/assets/social-preview.json) and re-render." >&2
     exit 2
     ;;
 esac
