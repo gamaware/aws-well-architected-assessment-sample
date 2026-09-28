@@ -1,0 +1,42 @@
+# Fictional client and workload. Every name, account and number here is invented for this sample.
+client: Harbor Goods
+client_description: A fictional mid-size retailer that sells home and outdoor goods online and in 40 stores.
+workload:
+  name: storefront-orders
+  description: >-
+    The customer-facing storefront and the order API behind it. Shoppers browse the catalog, check out and track
+    orders; a fulfilment worker sends paid orders to a third-party logistics partner.
+  environments:
+    - name: production
+      account_id: "111122223333"
+      region: us-east-1
+    - name: staging
+      account_id: "444455556666"
+      region: us-east-1
+    - name: shared-tooling
+      account_id: "123456789012"
+      region: us-east-1
+  components:
+    - Amazon Route 53 and Amazon CloudFront in front of an Application Load Balancer
+    - Amazon ECS on AWS Fargate running storefront-web and orders-api
+    - Amazon Aurora PostgreSQL-Compatible Edition (one writer, no reader)
+    - Amazon ElastiCache for Redis for sessions and the product cache
+    - Amazon SQS order-events queue with a dead-letter queue
+    - AWS Lambda fulfilment worker calling the logistics partner API
+    - Amazon S3 for product images
+    - GitHub Actions deploying with Terraform and the AWS CLI
+  domain: shop.example.com
+scope:
+  lenses:
+    - AWS Well-Architected Framework (six pillars)
+    - DevOps (AWS Well-Architected DevOps Guidance)
+  observation_window_days: 90
+  interviewees:
+    - Head of engineering (workload owner)
+    - Platform lead
+    - Two backend engineers
+    - Customer support lead
+  out_of_scope:
+    - Store point-of-sale systems
+    - The corporate data warehouse
+    - Penetration testing

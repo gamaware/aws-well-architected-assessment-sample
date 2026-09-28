@@ -1,0 +1,39 @@
+pillar: sustainability
+name: Sustainability
+lens: wellarchitected
+questions:
+  SUS02: How do you align cloud resources to your demand?
+  SUS04: How do you take advantage of data management policies and patterns to support your sustainability goals?
+  SUS05: >-
+    How do you select and use cloud hardware and services in your architecture to support your sustainability goals?
+items:
+  - id: SUS02-BP01
+    question: SUS02
+    title: Scale workload infrastructure dynamically
+    status: partial
+    risk: low
+    effort: S
+    owner: Platform lead
+    depends_on: [REL07-BP01]
+    evidence: [EV-13]
+    observation: Production scales one service; staging never scales down.
+    recommendation: Apply the scaling and staging schedule from REL07-BP01 and COST06-BP03.
+  - id: SUS04-BP03
+    question: SUS04
+    title: Use policies to manage the lifecycle of your datasets
+    status: not_met
+    risk: low
+    effort: S
+    owner: Platform lead
+    evidence: [EV-09, EV-10]
+    observation: >-
+      The image bucket keeps every object version forever and most CloudWatch log groups never expire.
+    recommendation: >-
+      Add S3 lifecycle rules for noncurrent versions and set retention on every log group (for example 30 days for
+      application logs and longer where investigations need it).
+  - id: SUS05-BP03
+    question: SUS05
+    title: Use managed services
+    status: met
+    evidence: [EV-13]
+    observation: The workload runs on Fargate, Aurora, SQS and Lambda rather than self-managed servers.

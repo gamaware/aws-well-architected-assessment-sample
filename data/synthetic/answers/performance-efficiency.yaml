@@ -1,0 +1,53 @@
+pillar: performance-efficiency
+name: Performance efficiency
+lens: wellarchitected
+questions:
+  PERF01: How do you select appropriate cloud resources and architecture for your workload?
+  PERF02: How do you select and use compute resources in your workload?
+  PERF05: How do your organizational practices and culture contribute to performance efficiency in your workload?
+items:
+  - id: PERF01-BP06
+    question: PERF01
+    title: Use benchmarking to drive architectural decisions
+    status: not_met
+    risk: low
+    effort: M
+    owner: Backend engineers
+    depends_on: [PERF05-BP04]
+    evidence: [EV-02]
+    observation: The team chose instance and task sizes at launch and never compared them with alternatives.
+    recommendation: >-
+      Benchmark orders-api on Graviton-based Fargate tasks against the current x86 tasks with the load test from
+      PERF05-BP04, and keep the faster or cheaper option.
+  - id: PERF02-BP01
+    question: PERF02
+    title: Select the best compute options for your workload
+    status: met
+    evidence: [EV-13]
+    observation: Containers on Fargate and an event-driven Lambda worker fit the workload's traffic shape.
+  - id: PERF02-BP03
+    question: PERF02
+    title: Collect compute-related metrics
+    status: partial
+    risk: low
+    effort: S
+    owner: Platform lead
+    evidence: [EV-09]
+    observation: >-
+      ECS Container Insights is off, so per-task memory is invisible; the team found the INC-101 memory exhaustion in
+      logs.
+    recommendation: Enable Container Insights on the production cluster and add memory utilization to the dashboard.
+  - id: PERF05-BP04
+    question: PERF05
+    title: Load test your workload
+    status: not_met
+    risk: medium
+    effort: M
+    owner: Backend engineers
+    evidence: [EV-02, EV-07]
+    observation: >-
+      Nobody load tests before campaigns; INC-103 happened during a promotional email campaign that marketing
+      scheduled without telling engineering.
+    recommendation: >-
+      Build a repeatable load test of the checkout path in staging and run it before every planned campaign; add a
+      campaign calendar that engineering can see.

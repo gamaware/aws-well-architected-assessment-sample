@@ -1,0 +1,29 @@
+# Secrets
+.env
+.env.local
+*.pem
+*.key
+credentials.json
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+# Live test output (never committed)
+live-output/
+
+# Tools
+.firecrawl/
+*.sarif
+.DS_Store
+.claude-flow/
+.claude/proven-config*
+.claude/.proven-config-version
+.claude/settings.local.json
+build/
+
+# Vale packages (downloaded by vale sync)
+styles/

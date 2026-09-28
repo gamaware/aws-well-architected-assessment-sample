@@ -1,0 +1,17 @@
+<polygon points="210.0,193.3 259.1,221.7 259.1,278.3 210.0,306.7 160.9,278.3 160.9,221.7" stroke-opacity="0.35"/><polygon points="210.0,136.7 308.1,193.3 308.1,306.7 210.0,363.3 111.9,306.7 111.9,193.3" stroke-opacity="0.35"/><polygon points="210.0,80.0 357.2,165.0 357.2,335.0 210.0,420.0 62.8,335.0 62.8,165.0" stroke-opacity="1"/><path d="M210,250 L210.0,80.0" stroke-opacity=".35"/><path d="M210,250 L357.2,165.0" stroke-opacity=".35"/><path d="M210,250 L357.2,335.0" stroke-opacity=".35"/><path d="M210,250 L210.0,420.0" stroke-opacity=".35"/><path d="M210,250 L62.8,335.0" stroke-opacity=".35"/><path d="M210,250 L62.8,165.0" stroke-opacity=".35"/>
+  <polygon points="210.0,103.8 316.0,188.8 342.5,326.5 210.0,307.8 95.2,316.3 89.3,180.3" fill="#FFFFFF" fill-opacity=".14"/>
+  <circle cx="210.0" cy="103.8" r="6" fill="#FFFFFF" stroke="none"/><circle cx="316.0" cy="188.8" r="6" fill="#FFFFFF" stroke="none"/><circle cx="342.5" cy="326.5" r="6" fill="#FFFFFF" stroke="none"/><circle cx="210.0" cy="307.8" r="6" fill="#FFC34D" stroke="none"/><circle cx="95.2" cy="316.3" r="6" fill="#FFFFFF" stroke="none"/><circle cx="89.3" cy="180.3" r="6" fill="#FFFFFF" stroke="none"/>
+  <circle cx="210" cy="308" r="34" stroke="#FFC34D" stroke-width="4" stroke-dasharray="14 9"/><path d="M234,332 L300,420" stroke="#FFC34D" stroke-width="4"/><circle cx="300" cy="420" r="16" fill="#FFC34D" stroke="none"/><text x="300" y="426" text-anchor="middle" stroke="none" fill="#2A1650" font-weight="600">1</text>
+  <text x="326" y="426" text-anchor="start" stroke="none" fill="#FFFFFF">reliability</text>
+  <text x="40" y="44" text-anchor="start" stroke="none" fill="#FFFFFF">6 pillars</text>
+  <path d="M452,110 H700 M452,190 H700 M452,270 H700 M452,350 H700" stroke-opacity=".3"/>
+  <circle cx="470" cy="150" r="10" fill="#FFC34D" stroke="none"/><path d="M494,150 H690" stroke-width="10" stroke-opacity=".9"/>
+  <circle cx="470" cy="230" r="10"/><path d="M494,230 H640" stroke-width="10" stroke-opacity=".6"/>
+  <circle cx="470" cy="310" r="10" stroke-opacity=".5"/><path d="M494,310 H590" stroke-width="10" stroke-opacity=".35"/>
+  <path d="M40,540 H688"/>
+  <path d="M688,540 l-12,-6 v12 z" fill="#FFFFFF" stroke="none"/>
+  <path d="M40,528 V552"/>
+  <circle cx="250" cy="540" r="11" fill="#FFC34D" stroke="none"/><circle cx="440" cy="540" r="11" fill="#FFFFFF" stroke="none"/>
+  <circle cx="630" cy="540" r="11" fill="#FFFFFF" stroke="none"/>
+  <path d="M60,500 H230 M270,500 H420 M460,500 H610" stroke-width="8" stroke-opacity=".55"/>
+  <text x="250" y="590" text-anchor="middle" stroke="none" fill="#FFFFFF">30</text><text x="440" y="590" text-anchor="middle" stroke="none" fill="#FFFFFF">60</text><text x="630" y="590" text-anchor="middle" stroke="none" fill="#FFFFFF">90 days</text>
