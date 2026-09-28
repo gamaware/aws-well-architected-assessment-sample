@@ -70,8 +70,8 @@ Harbor Goods sells home and outdoor goods online and in stores. Its storefront, 
 on Amazon ECS on AWS Fargate, Amazon Aurora PostgreSQL, Amazon ElastiCache, Amazon SQS and AWS Lambda, deployed by
 GitHub Actions and Terraform. The head of engineering wants to know which risks to fix first before the peak season.
 
-Constraints: one workload, read-only access, a two-hour interview, a 90-day observation window, and no changes to
-the client's accounts.
+Constraints: one workload, read-only access for infrastructure inspection, a two-hour interview, a 90-day observation
+window, and no changes to the client's infrastructure.
 
 The client accepts the deliverable when:
 
@@ -176,8 +176,9 @@ Workflows start from `permissions: {}`, pin actions to full commit SHAs, and nev
   engagement walks through every capability that applies to the workload.
 - The offline checks prove the report is consistent with its data. They cannot prove the data describes a real
   workload; in an engagement that proof is the evidence itself and the client's review of the findings.
-- A real engagement records the answers in the AWS Well-Architected Tool in the client's own account, saves a
-  milestone, and returns after the first 90 days to re-review the high risks.
+- In a real engagement the client records the answers in the AWS Well-Architected Tool in its own account, or grants
+  separately scoped Tool write access; the review saves a milestone and returns after the first 90 days to re-review
+  the high risks.
 
 ## Related work
 

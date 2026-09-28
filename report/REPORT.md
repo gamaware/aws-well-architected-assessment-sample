@@ -11,7 +11,7 @@
 | Accounts | Production `111122223333`, staging `444455556666`, shared tooling `123456789012` (AWS documentation example IDs) |
 | Region | `us-east-1` |
 | Lenses | AWS Well-Architected Framework (six pillars) and the DevOps lens (AWS Well-Architected DevOps Guidance) |
-| Access used | Read-only |
+| Access used | Read-only for infrastructure inspection; Tool record kept by the client |
 | Revision | 1.0 |
 
 Tables between `BEGIN GENERATED` and `END GENERATED` markers in the source come from `make evidence` and the
