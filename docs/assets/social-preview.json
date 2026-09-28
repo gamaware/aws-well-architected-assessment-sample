@@ -1,0 +1,11 @@
+{
+  "color": "#2B2F77",
+  "heading": ["DevOps &", "Well-Architected", "assessment"],
+  "subtitle": "Six pillars · ranked risks · 90-day roadmap",
+  "steps": [
+    {"label": "Interviews & data", "icon": "icons/Arch_Amazon-CloudWatch_64.svg"},
+    {"label": "Ranked risks", "icon": "icons/Arch_AWS-Trusted-Advisor_64.svg"},
+    {"label": "Improvement roadmap", "icon": "icons/Arch_AWS-Well-Architected-Tool_64.svg"}
+  ],
+  "illustration": "social-preview-illustration.svg"
+}

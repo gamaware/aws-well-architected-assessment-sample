@@ -1,0 +1,239 @@
+pillar: devops
+name: DevOps lens
+lens: devops
+# Questions here are DevOps Guidance capabilities; IDs follow the guidance's [Saga.Capability.N] scheme.
+questions:
+  DL.SCM: Software component management
+  DL.CI: Continuous integration
+  DL.CD: Continuous delivery
+  DL.ADS: Advanced deployment strategies
+  DL.EAC: Everything as code
+  QA.FT: Functional testing
+  QA.ST: Security testing
+  O.SI: Strategic instrumentation
+  O.CM: Continuous monitoring
+  AG.SAD: Secure access and delegation
+  AG.CA: Continuous auditing
+  OA.STD: Supportive team dynamics
+  OA.BCL: Balanced cognitive load
+items:
+  - id: DL.SCM.2
+    question: DL.SCM
+    title: Keep feature branches short-lived
+    status: partial
+    risk: low
+    effort: S
+    owner: Backend engineers
+    evidence: [EV-04, EV-06]
+    observation: >-
+      Most pull requests merge within two days, but release branches for storefront-web live for about a week while
+      a batch of changes waits for a deployment slot.
+    recommendation: Merge to main behind feature flags and deploy from main, retiring the release branches.
+  - id: DL.CI.1
+    question: DL.CI
+    title: Integrate code changes regularly and frequently
+    status: met
+    evidence: [EV-04]
+    observation: Engineers merge small pull requests to main more than twice a week.
+  - id: DL.CI.2
+    question: DL.CI
+    title: Trigger builds automatically upon source code modifications
+    status: met
+    evidence: [EV-04]
+    observation: Every push to main builds and pushes an image to Amazon ECR.
+  - id: DL.CD.4
+    question: DL.CD
+    title: Automate the entire deployment process
+    status: partial
+    risk: medium
+    effort: M
+    owner: Platform lead
+    depends_on: [OPS05-BP10]
+    evidence: [EV-04, EV-06]
+    observation: >-
+      The team ships {delivery.deploys_per_week} deployments a week, each started by hand, with the database
+      migration run from a laptop.
+    recommendation: >-
+      Once the promotion pipeline from OPS05-BP10 exists, trigger production deployments from the approved staging
+      build without any manual command.
+  - id: DL.CD.6
+    question: DL.CD
+    title: Refine delivery pipelines using metrics for continuous improvement
+    status: not_met
+    risk: low
+    effort: S
+    owner: Head of engineering
+    evidence: [EV-06, EV-07]
+    observation: >-
+      Nobody tracks delivery metrics. From the exports, the change failure rate is
+      {delivery.change_failure_rate_pct} percent and the median time to restore service is
+      {incidents.median_minutes_to_restore} minutes.
+    recommendation: >-
+      Publish deployment frequency, lead time, change failure rate and time to restore from the pipeline and the
+      incident log each month, and review the trend in the operations review.
+  - id: DL.ADS.2
+    question: DL.ADS
+    title: Implement automatic rollbacks for failed deployments
+    status: not_met
+    risk: high
+    effort: M
+    owner: Platform lead
+    depends_on: [OPS06-BP04]
+    evidence: [EV-06, EV-13]
+    observation: >-
+      All {delivery.rollbacks} rollbacks in the window were manual redeployments of the previous image, started
+      after customers or staff reported the problem.
+    recommendation: >-
+      Use the circuit breaker and alarm-based rollback from OPS06-BP04 for every service, including the Lambda
+      fulfilment worker through CodeDeploy traffic shifting with alarms.
+  - id: DL.ADS.3
+    question: DL.ADS
+    title: Use staggered deployment and release strategies
+    status: not_met
+    risk: medium
+    effort: M
+    owner: Platform lead
+    depends_on: [OPS06-BP03]
+    evidence: [EV-04]
+    observation: Every release reaches all users at once; there are no canary tasks or feature flags.
+    recommendation: >-
+      After blue/green is in place, shift traffic in steps (for example 10 percent for ten minutes) and release
+      risky features behind flags.
+  - id: DL.EAC.1
+    question: DL.EAC
+    title: Organize infrastructure as code for scale
+    status: partial
+    risk: medium
+    effort: M
+    owner: Platform lead
+    evidence: [EV-08]
+    observation: >-
+      Terraform covers the network, ECS and Aurora, but the team built ElastiCache, the alarms and the Lambda worker
+      in the console, and one state file holds production and staging.
+    recommendation: >-
+      Import the console-built resources, split state per environment and per stack, and run plan on every pull
+      request with drift detection each night.
+  - id: QA.FT.1
+    question: QA.FT
+    title: Ensure individual component functionality with unit tests
+    status: partial
+    risk: medium
+    effort: M
+    owner: Backend engineers
+    depends_on: [OPS05-BP02]
+    evidence: [EV-04]
+    observation: orders-api has unit tests with about 40 percent line coverage; the other two services have none.
+    recommendation: >-
+      Cover checkout, payment status handling and the fulfilment message format first, and fail the build when the
+      tests fail.
+  - id: QA.ST.4
+    question: QA.ST
+    title: Enhance source code security with static application security testing
+    status: not_met
+    risk: medium
+    effort: S
+    owner: Backend engineers
+    depends_on: [SEC11-BP02]
+    evidence: [EV-04]
+    observation: No static application security testing runs on any repository.
+    recommendation: Delivered by SEC11-BP02; track it here so the DevOps lens score reflects it.
+  - id: QA.ST.6
+    question: QA.ST
+    title: Validate third-party components using software composition analysis
+    status: not_met
+    risk: medium
+    effort: S
+    owner: Backend engineers
+    evidence: [EV-04, EV-12]
+    observation: >-
+      Dependencies are never scanned before release; Inspector only finds image vulnerabilities after the image is
+      in Amazon ECR.
+    recommendation: Add dependency scanning to pull requests and enable Dependabot security updates on all repositories.
+  - id: O.SI.3
+    question: O.SI
+    title: Instrument all systems for comprehensive telemetry data collection
+    status: partial
+    risk: medium
+    effort: M
+    owner: Backend engineers
+    depends_on: [REL06-BP01]
+    evidence: [EV-09]
+    observation: >-
+      Services write unstructured logs and no traces, so nobody can follow a slow checkout across storefront-web,
+      orders-api and the database.
+    recommendation: >-
+      Adopt structured JSON logs with a request ID and add OpenTelemetry tracing through the AWS Distro for
+      OpenTelemetry collector to AWS X-Ray.
+  - id: O.CM.3
+    question: O.CM
+    title: Conduct post-incident analysis for continuous improvement
+    status: partial
+    risk: medium
+    effort: S
+    owner: Head of engineering
+    depends_on: [OPS11-BP02]
+    evidence: [EV-07]
+    observation: >-
+      {incidents.postmortems} of {incidents.total} incidents have an analysis, and nobody tracked any action from them
+      to completion.
+    recommendation: Delivered by OPS11-BP02; review open actions in the weekly operations review.
+  - id: AG.SAD.3
+    question: AG.SAD
+    title: Treat pipelines as production resources
+    status: not_met
+    risk: medium
+    effort: S
+    owner: Platform lead
+    depends_on: [SEC03-BP02]
+    evidence: [EV-04, EV-05]
+    observation: >-
+      Any repository admin can edit the deploy workflows, and the workflows run with the ci-deployer key that holds
+      AdministratorAccess in production.
+    recommendation: >-
+      Protect the workflow files with CODEOWNERS and required reviews, and run production deployments only from a
+      GitHub environment with required reviewers.
+  - id: AG.CA.1
+    question: AG.CA
+    title: Establish comprehensive audit trails
+    status: partial
+    risk: low
+    effort: S
+    owner: Platform lead
+    depends_on: [SEC04-BP01]
+    evidence: [EV-06, EV-09]
+    observation: >-
+      The organization trail records API calls, but nothing links a production change to its pull request, approver
+      and pipeline run.
+    recommendation: >-
+      Record the commit SHA, pull request and approver on every deployment (for example as ECS task definition tags
+      and a GitHub deployment record), and keep the records for at least a year.
+  - id: OA.STD.6
+    question: OA.STD
+    title: Provide teams ownership of the entire value stream for their product
+    status: partial
+    risk: medium
+    effort: M
+    owner: Head of engineering
+    depends_on: [DL.CD.4]
+    evidence: [EV-02]
+    observation: >-
+      Backend engineers own the code, but the platform lead starts every production deployment and runs every
+      database migration, so releases wait for one person.
+    recommendation: >-
+      Once deployments run from the pipeline, let each service's engineers approve and release their own changes,
+      with the platform lead reviewing only infrastructure changes.
+  - id: OA.BCL.7
+    question: OA.BCL
+    title: Cultivate a psychologically-safe culture for experimentation
+    status: partial
+    risk: low
+    effort: S
+    owner: Head of engineering
+    depends_on: [OPS11-BP02]
+    evidence: [EV-02, EV-07]
+    observation: >-
+      Engineers described incident reviews that start from who made the change, and said they batch releases to avoid
+      being the one on the call.
+    recommendation: >-
+      Run post-incident analyses in a blameless format that asks what made the failure possible, and have the head of
+      engineering open each review by stating that rule.

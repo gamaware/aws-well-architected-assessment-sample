@@ -1,0 +1,8 @@
+incident_id,day,severity,detected_by,minutes_to_detect,minutes_to_restore,postmortem,summary
+INC-101,3,SEV2,customer,42,95,no,Checkout returned HTTP 502 while the orders-api tasks restarted after an out-of-memory kill
+INC-102,10,SEV3,staff,18,40,no,Fulfilment worker release dropped order events until it was rolled back by hand
+INC-103,23,SEV2,alarm,6,70,yes,Aurora writer CPU saturation during a promotional email campaign
+INC-104,35,SEV2,customer,55,120,no,Storefront release broke image URLs for product pages until rolled back
+INC-105,44,SEV3,staff,30,25,no,Expired third-party logistics API token stopped shipment label creation
+INC-106,50,SEV1,customer,38,185,yes,Orders-api schema change locked the orders table and blocked checkout
+INC-107,77,SEV3,alarm,4,15,no,SQS dead-letter queue growth after a malformed partner payload

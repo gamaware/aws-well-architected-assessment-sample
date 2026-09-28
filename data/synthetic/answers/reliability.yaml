@@ -1,0 +1,109 @@
+pillar: reliability
+name: Reliability
+lens: wellarchitected
+questions:
+  REL06: How do you monitor workload resources?
+  REL07: How do you design your workload to adapt to changes in demand?
+  REL09: How do you back up data?
+  REL10: How do you use fault isolation to protect your workload?
+  REL12: How do you test reliability?
+  REL13: How do you plan for disaster recovery (DR)?
+items:
+  - id: REL06-BP01
+    question: REL06
+    title: Monitor all components for the workload (Generation)
+    status: partial
+    risk: high
+    effort: M
+    owner: Platform lead
+    evidence: [EV-03, EV-07, EV-09]
+    observation: >-
+      Alarms cover ALB 5xx errors only. The SQS dead-letter queue, Aurora connections, Lambda errors and the
+      logistics partner API have no alarm, and customers found {incidents.customer_detected} of {incidents.total}
+      incidents first, with a median time to detect of {incidents.median_minutes_to_detect} minutes.
+    recommendation: >-
+      Add alarms for the dead-letter queue depth, Aurora CPU and connections, Lambda errors and throttles, and a
+      CloudWatch Synthetics canary on the checkout path.
+  - id: REL07-BP01
+    question: REL07
+    title: Use automation when obtaining or scaling resources
+    status: partial
+    risk: medium
+    effort: S
+    owner: Platform lead
+    evidence: [EV-13, EV-07]
+    observation: >-
+      storefront-web scales on CPU; orders-api runs a fixed two tasks and ran out of memory under load (INC-101).
+    recommendation: >-
+      Add target tracking scaling to orders-api on CPU and on ALB requests per target, with a minimum of three tasks
+      across three Availability Zones.
+  - id: REL09-BP01
+    question: REL09
+    title: Identify and back up all data that needs to be backed up, or reproduce the data from sources
+    status: met
+    evidence: [EV-10]
+    observation: Aurora automated backups (seven days) and an AWS Backup plan cover the orders database and the image bucket.
+  - id: REL09-BP04
+    question: REL09
+    title: Perform periodic recovery of the data to verify backup integrity and processes
+    status: not_met
+    risk: high
+    effort: S
+    owner: Platform lead
+    evidence: [EV-10]
+    observation: Nobody has ever restored the orders database from a backup, and the restore time is unknown.
+    recommendation: >-
+      Restore the latest snapshot into the staging account every quarter, time it, check row counts, and record the
+      result next to the recovery runbook.
+  - id: REL10-BP01
+    question: REL10
+    title: Deploy the workload to multiple locations
+    status: partial
+    risk: high
+    effort: M
+    owner: Platform lead
+    evidence: [EV-10, EV-13]
+    observation: >-
+      ECS tasks span two Availability Zones, but the Aurora cluster has a single writer and no reader, so a writer
+      failure means recreating the instance, and ElastiCache runs one node.
+    recommendation: >-
+      Add an Aurora reader in a second Availability Zone so failover takes about a minute, and enable Multi-AZ with
+      automatic failover on ElastiCache.
+  - id: REL12-BP04
+    question: REL12
+    title: Test resiliency using chaos engineering
+    status: not_met
+    risk: low
+    effort: M
+    owner: Platform lead
+    depends_on: [REL06-BP01, REL10-BP01]
+    evidence: [EV-02]
+    observation: The team has never injected a failure on purpose.
+    recommendation: >-
+      Once alarms and Multi-AZ are in place, run an AWS Fault Injection Service experiment in staging that stops the
+      Aurora writer, with a written hypothesis and stop conditions.
+  - id: REL13-BP01
+    question: REL13
+    title: Define recovery objectives for downtime and data loss
+    status: not_met
+    risk: high
+    effort: S
+    owner: Head of engineering
+    evidence: [EV-01]
+    observation: The business has no agreed recovery time or recovery point objective for checkout.
+    recommendation: >-
+      Agree an RTO and RPO for checkout and order history with the business owner, and record them in the
+      workload's operations document.
+  - id: REL13-BP02
+    question: REL13
+    title: Use defined recovery strategies to meet the recovery objectives
+    status: not_met
+    risk: medium
+    effort: L
+    owner: Platform lead
+    depends_on: [REL13-BP01, REL09-BP04]
+    evidence: [EV-10]
+    observation: The workload has no disaster recovery strategy beyond backups in the same Region.
+    recommendation: >-
+      Choose a strategy that meets the agreed objectives (backup and restore with cross-Region copies is likely
+      enough), then document and test it.

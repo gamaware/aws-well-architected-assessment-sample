@@ -1,0 +1,76 @@
+pillar: cost-optimization
+name: Cost optimization
+lens: wellarchitected
+questions:
+  COST02: How do you govern usage?
+  COST03: How do you monitor your cost and usage?
+  COST04: How do you decommission resources?
+  COST06: How do you meet cost targets when you select resource type, size and number?
+  COST07: How do you use pricing models to reduce cost?
+items:
+  - id: COST02-BP05
+    question: COST02
+    title: Implement cost controls
+    status: partial
+    risk: low
+    effort: S
+    owner: Head of engineering
+    evidence: [EV-11]
+    observation: One account-level AWS Budgets alert exists and emails a former employee's address.
+    recommendation: >-
+      Create a budget per environment with alerts at 80 and 100 percent of forecast, sent to a team distribution
+      list.
+  - id: COST03-BP02
+    question: COST03
+    title: Add organization information to cost and usage
+    status: partial
+    risk: medium
+    effort: S
+    owner: Platform lead
+    evidence: [EV-08, EV-11]
+    observation: >-
+      Terraform-managed resources carry `service` and `environment` tags, but the tags are not activated as cost
+      allocation tags and console-created resources have none.
+    recommendation: >-
+      Activate the tags for cost allocation, add default_tags to the Terraform AWS provider, and add a tag policy in
+      AWS Organizations.
+  - id: COST04-BP03
+    question: COST04
+    title: Decommission resources
+    status: not_met
+    risk: low
+    effort: S
+    owner: Platform lead
+    evidence: [EV-05, EV-11]
+    observation: >-
+      The legacy-image-sync user and its Lambda function have been idle for months, and three unattached Elastic IP
+      addresses and 14 old EBS snapshots remain in staging.
+    recommendation: Remove the idle resources after confirming with their owners, and review unused resources monthly.
+  - id: COST06-BP03
+    question: COST06
+    title: Select resource type, size, and number automatically based on metrics
+    status: partial
+    risk: medium
+    effort: M
+    owner: Platform lead
+    depends_on: [PERF02-BP03]
+    evidence: [EV-11, EV-13]
+    observation: >-
+      storefront-web runs 2 vCPU tasks that average 9 percent CPU, and the staging environment runs at production
+      size around the clock.
+    recommendation: >-
+      Right-size tasks from Container Insights data, scale staging to zero outside working hours, and review
+      AWS Compute Optimizer recommendations each month.
+  - id: COST07-BP01
+    question: COST07
+    title: Perform pricing model analysis
+    status: not_met
+    risk: low
+    effort: S
+    owner: Head of engineering
+    depends_on: [COST06-BP03]
+    evidence: [EV-11]
+    observation: All compute and the database run on On-Demand pricing.
+    recommendation: >-
+      After right-sizing, buy a Compute Savings Plan for the steady baseline and consider Aurora reserved instances
+      for the writer.
