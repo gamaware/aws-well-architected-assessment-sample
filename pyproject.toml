@@ -12,6 +12,8 @@ dev = ["pytest==9.1.1", "ruff==0.16.9"]
 live = ["boto3==1.43.103"]
 
 [tool.uv]
+exclude-newer = "7 days"
+exclude-newer-package = { ruff = false, boto3 = false, botocore = false }
 package = false
 default-groups = ["dev"]
 
