@@ -27,7 +27,7 @@ test: ## Unit tests and report reproduction tests
 check: ## Fail if evidence/ or the report tables differ from what data/synthetic produces
 	$(PY) check
 
-verify: lint test check ## Everything CI runs on the code and data (offline)
+verify: lint test check ## Offline code and data checks (CI runs these plus the shared checks)
 	@echo "verify: all checks passed"
 
 evidence: ## Regenerate evidence/ and the generated blocks in report/REPORT.md
