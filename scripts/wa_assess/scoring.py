@@ -107,7 +107,8 @@ def summarize(assessment: Assessment) -> dict:
         score = round_half_up(100 * credit / len(items), 0) if items else 0
         gaps = [i for i in items if i.is_gap]
         return {
-            "best_practices": len(items),
+            # Reviewed includes not-applicable practices; the score uses only the applicable ones.
+            "best_practices": sum(len(p.items) for p in assessment.pillars if p.lens == lens),
             "questions": sum(len(p.question_risk) for p in chosen),
             "score_pct": score,
             "hri": sum(p.hri for p in chosen),

@@ -262,4 +262,7 @@ class Renderer:
 
     def report(self, text: str) -> str:
         """Return the report with every generated block re-rendered; prose outside the markers is kept."""
+        markers = text.count("<!-- BEGIN GENERATED") + text.count("<!-- END GENERATED")
+        if markers != 2 * len(BLOCK.findall(text)):
+            raise ValueError("a GENERATED marker is malformed or unpaired; fix it so the block is re-rendered")
         return BLOCK.sub(lambda m: m.group(1) + "\n" + self.block(m["name"]) + "\n" + m.group(4), text)

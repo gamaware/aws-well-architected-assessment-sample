@@ -1,14 +1,16 @@
 """Record the assessment answers in the AWS Well-Architected Tool and compare its risk counts with the report.
 
 Called by scripts/live/wa-tool-roundtrip.sh, which checks the account first and deletes the workload afterwards.
-It fails when a best-practice title in data/synthetic does not match a choice in the Tool, which is the check that
-the IDs and titles in this repository are the ones AWS publishes. Risk counts are printed side by side, not
-asserted: the Tool counts unreviewed best practices as not selected and has its own per-question rules.
+It fails when a best-practice title in data/synthetic does not match a choice in the Tool, or when the Tool's choice
+title carries a best-practice ID (such as "[DL.CI.1]" or "OPS05-BP01") that differs from the ID in data/synthetic.
+Choices whose Tool title has no ID prefix are matched by title and pillar only. Risk counts are printed side by
+side, not asserted: the Tool counts unreviewed best practices as not selected and has its own per-question rules.
 """
 
 from __future__ import annotations
 
 import argparse
+import importlib
 import json
 import re
 import sys
@@ -27,6 +29,15 @@ FRAMEWORK_PILLARS = {
     "sustainability": "sustainability",
 }
 NONE_OF_THESE = "none of these"
+
+
+TITLE_ID = re.compile(r"^\s*(?:\[(?P<devops>[A-Z.0-9]+)\]|(?P<framework>[A-Z]+\d{2}-BP\d{2}):?)")
+
+
+def title_id(title: str) -> str | None:
+    """The best-practice ID a Tool choice title starts with, if any."""
+    match = TITLE_ID.match(title)
+    return (match["devops"] or match["framework"]) if match else None
 
 
 def normalize(title: str) -> str:
@@ -52,19 +63,28 @@ def record(client, workload_id: str, lens: str, items: list) -> list[str]:
     """Select the met best practices per question; return the titles the Tool does not know."""
     # Titles are matched within a pillar: the Tool reuses some, such as "Perform post-incident analysis" in both
     # operational excellence and reliability.
-    choices, repeated = {}, set()
+    choices, repeated, tool_ids = {}, set(), {}
     for answer in answers(client, workload_id, lens):
         for choice in answer["Choices"]:
             key = (answer["PillarId"], normalize(choice["Title"]))
             if key in choices and key[1] != NONE_OF_THESE:
                 repeated.add(key)
             choices[key] = (answer["QuestionId"], choice["ChoiceId"], answer)
+            tool_ids[key] = title_id(choice["Title"])
 
     def key_of(item) -> tuple[str, str]:
         return FRAMEWORK_PILLARS.get(item.pillar, item.pillar), normalize(item.title)
 
     # A title that is missing, or that appears under two questions of one pillar, cannot be matched safely.
     missing = [f"{item.id} {item.title}" for item in items if key_of(item) not in choices or key_of(item) in repeated]
+    # A title that matches but sits under another ID in the Tool means the ID in data/synthetic is wrong.
+    missing += [
+        f"{item.id} {item.title} (the Tool lists it as {tool_ids[key_of(item)]})"
+        for item in items
+        if key_of(item) in choices
+        and key_of(item) not in repeated
+        and tool_ids.get(key_of(item)) not in (None, item.id)
+    ]
     selected: dict[str, list[str]] = {}
     for item in items:
         match = choices.get(key_of(item))
@@ -103,7 +123,8 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    import boto3  # noqa: PLC0415 - only the live group installs boto3; the offline tests import this module
+    # Only the live dependency group installs boto3; the offline tests import this module without it.
+    boto3 = importlib.import_module("boto3")
 
     assessment = load(Path("data/synthetic"))
     scores = {p["key"]: p for p in summarize(assessment)["pillars"]}

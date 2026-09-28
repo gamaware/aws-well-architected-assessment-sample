@@ -1,4 +1,4 @@
-# Assessment methodology
+# Assessment method
 
 This page describes how the assessment in [`report/REPORT.md`](../report/REPORT.md) runs in an engagement and how
 this repository reproduces it. The client, Harbor Goods, is fictional.
@@ -26,13 +26,13 @@ this repository reproduces it. The client, Harbor Goods, is fictional.
 | 1. Kickoff and access | Agree the workload, the interviewees and the questions that matter most. The client grants read-only access for infrastructure inspection (for example the `ReadOnlyAccess` managed policy through an IAM Identity Center permission set). The assessor confirms the access works before the interview. | Scope note, access check |
 | 2. Interview | A two-hour session with the workload owner, the platform lead and engineers walks through each best practice in scope. The assessor records answers as said, with the name of the role that gave them. | Interview notes (EV-01 to EV-03) |
 | 3. Evidence | The assessor checks each answer against what is running: read-only exports (IAM credential report, deployment history, incident log) and reviews of the pipeline, infrastructure code, monitoring, backups, costs and security findings. Where the evidence disagrees with the interview, the evidence wins and the finding says so. | Evidence register (EV-04 to EV-13) |
-| 4. Record in the Well-Architected Tool | The workload is recorded in the Tool in the client's own account: the client enters it with the assessor, or grants the assessor separately scoped Tool write access. The record applies the Well-Architected Framework lens and the DevOps lens, selects the best practices the evidence supports, and adds notes with evidence IDs. The Tool then reports high-risk and medium-risk issues per question. | Tool workload and milestone |
+| 4. Record in the Well-Architected Tool | The client records the workload in the Tool in its own account, together with the assessor, or grants the assessor separately scoped Tool write access. The record applies the Well-Architected Framework lens and the DevOps lens, selects the best practices the evidence supports, and adds notes with evidence IDs. The Tool then reports high-risk and medium-risk issues per question. | Tool workload and milestone |
 | 5. Rate and plan | Every gap gets a risk rating, an effort estimate, an owner and a recommendation, then the scripts build the backlog and roadmap from fixed rules (below). | Backlog, roadmap |
 | 6. Readout | A walkthrough of the findings with the team, agreeing the order of work. The client keeps the report, the backlog file and the Tool record. | Report and PDF |
 
-Infrastructure inspection is read-only. The client records the assessment in the Well-Architected Tool, or grants
-separately scoped Tool write access. In this repository synthetic data stands in for steps 2 and 3, and step 4
-is optional through `make test-live`.
+The assessor inspects infrastructure with read-only access. The client records the assessment in the
+Well-Architected Tool, or grants separately scoped Tool write access. In this repository synthetic data stands in
+for steps 2 and 3, and step 4 is optional through `make test-live`.
 
 ## Recording answers
 
@@ -77,7 +77,7 @@ These rules live in `scripts/wa_assess/scoring.py` and `tests/reference.py` reco
   above).
 
 Partial credit is this method's choice, not the Tool's: in the Tool a partial answer is simply not selected. The
-Tool's risk counts can therefore differ from the report's where the Tool's own rules for a question differ;
+Tool's risk counts can differ from the report's where the Tool's own rules for a question differ;
 `make test-live` shows both side by side.
 
 ## Backlog and roadmap rules

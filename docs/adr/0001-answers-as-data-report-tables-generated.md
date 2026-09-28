@@ -14,7 +14,7 @@ reader cannot tell how the assessor reached a score. Clients also want the backl
 
 Every answer is a structured entry in `data/synthetic/answers/<pillar>.yaml` with its status, risk, effort, owner,
 evidence IDs and dependencies. Figures that come from exports are placeholders (for example `{delivery.rollbacks}`)
-filled from the CSV files. Scripts in `scripts/wa_assess/` validate the data and write every table in
+filled from the CSV files. Scripts in `scripts/wa_assess/` check the data and write every table in
 `report/REPORT.md` between `BEGIN GENERATED` and `END GENERATED` markers, plus `evidence/backlog.csv` and the other
 evidence files. Narrative prose outside the markers stays hand-written and avoids hard-coded numbers.
 

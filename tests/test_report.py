@@ -18,6 +18,8 @@ import yaml
 
 import reference
 from wa_assess.__main__ import main, outputs
+from wa_assess.model import load
+from wa_assess.render import Renderer
 
 ALLOWED_ACCOUNT_IDS = {"111122223333", "444455556666", "123456789012"}
 
@@ -132,7 +134,7 @@ def test_report_has_no_unfilled_placeholders_and_cites_known_evidence(repo_root,
 def test_only_documentation_example_account_ids_appear(repo_root):
     # Only files git tracks: gitignored local files (tool caches, live-test output) are never published.
     # /usr/bin/git exists on macOS and the Ubuntu CI runner; an absolute literal keeps ruff's S603/S607 satisfied.
-    suffixes = {".md", ".yaml", ".yml", ".csv", ".json", ".sh", ".py", ".toml"}
+    suffixes = {".md", ".yaml", ".yml", ".csv", ".json", ".sh", ".py", ".toml", ".drawio", ".svg", ".ini", ".cfg"}
     tracked = subprocess.run(
         ["/usr/bin/git", "ls-files", "-z"], cwd=repo_root, check=True, capture_output=True, text=True
     ).stdout.split("\0")
@@ -142,3 +144,11 @@ def test_only_documentation_example_account_ids_appear(repo_root):
             continue
         found = set(re.findall(r"(?<!\d)\d{12}(?!\d)", path.read_text(encoding="utf-8", errors="ignore")))
         assert found <= ALLOWED_ACCOUNT_IDS, f"{name}: {found - ALLOWED_ACCOUNT_IDS}"
+
+
+def test_a_malformed_generated_marker_is_refused(repo_root, report):
+    renderer = Renderer(load(repo_root / "data" / "synthetic"), repo_root)
+    broken = report.replace("<!-- BEGIN GENERATED: findings:security -->", "<!-- BEGIN GENERATED findings:security -->")
+    assert broken != report
+    with pytest.raises(ValueError, match="malformed or unpaired"):
+        renderer.report(broken)

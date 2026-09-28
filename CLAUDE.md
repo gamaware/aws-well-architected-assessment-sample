@@ -12,7 +12,7 @@ generated blocks in `report/REPORT.md` and `README.md`.
 
 - `data/synthetic/answers/<pillar>.yaml`: one entry per best practice (status, risk, effort, owner, evidence).
 - `data/synthetic/exports/*.csv`: synthetic exports; observations quote them through `{group.name}` placeholders.
-- `scripts/wa_assess/`: `model` (load and validate), `metrics`, `scoring`, `backlog`, `render`, `__main__`.
+- `scripts/wa_assess/`: `model` (load and check), `metrics`, `scoring`, `backlog`, `render`, `__main__`.
 - `scripts/live/`: manual Well-Architected Tool round trip (`make test-live`).
 - `tests/reference.py`: an independent implementation of the rules. Keep it free of imports from `wa_assess`.
 

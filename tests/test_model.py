@@ -89,3 +89,10 @@ def test_evidence_sources_must_stay_under_exports(data_copy):
     path.write_text(yaml.safe_dump(data), encoding="utf-8")
     with pytest.raises(AssessmentError, match="must sit under data/synthetic/exports"):
         load(data_copy / "data" / "synthetic")
+
+
+@pytest.mark.parametrize("field", ["evidence", "depends_on"])
+def test_id_lists_reject_a_scalar(data_copy, field):
+    edit(data_copy, "security", lambda d: find(d, "SEC02-BP02").update({field: "EV-01"}))
+    with pytest.raises(AssessmentError, match=f"SEC02-BP02: {field} must be a list of IDs"):
+        load(data_copy / "data" / "synthetic")
