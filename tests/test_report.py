@@ -169,3 +169,10 @@ def test_marker_like_text_inside_a_generated_block_is_not_a_malformed_marker(rep
     assert begin in report
     noisy = report.replace(begin, begin + "<!-- BEGIN note --> and <!-- END note -->\n", 1)
     assert renderer.report(noisy) == renderer.report(report)
+
+
+def test_a_duplicated_block_is_refused(repo_root, report):
+    renderer = Renderer(load(repo_root / "data" / "synthetic"), repo_root)
+    block = "<!-- BEGIN GENERATED: findings:security -->\n\n<!-- END GENERATED: findings:security -->"
+    with pytest.raises(ValueError, match="more than once"):
+        renderer.report(report + "\n" + block + "\n")

@@ -266,6 +266,9 @@ class Renderer:
         """Return the report with every generated block re-rendered; prose outside the markers is kept."""
         # Count stray markers outside well-formed blocks only: block bodies hold rendered assessment text,
         # which may itself contain comment-like strings.
+        names = [m["name"] for m in BLOCK.finditer(text)]
+        if len(names) != len(set(names)):
+            raise ValueError("a GENERATED block name appears more than once; each block must be unique")
         if MARKER.search(BLOCK.sub("", text)):
             raise ValueError("a GENERATED marker is malformed or unpaired; fix it so the block is re-rendered")
         return BLOCK.sub(lambda m: m.group(1) + "\n" + self.block(m["name"]) + "\n" + m.group(4), text)
