@@ -20,7 +20,7 @@ workflow uses. The committed PDF is the only PDF this repository publishes.
 
 - One source for both formats and one PDF engine, locally and in CI.
 - `make pdf` needs Docker on the maintainer machine; it downloads no Python packages.
-- The image and its arguments are duplicated in the `Makefile`. When the shared workflow changes its pin or
+- The `Makefile` repeats the image and its arguments. When the shared workflow changes its pin or
   defaults, the `Makefile` changes with it.
 - PDF bytes are not reproducible across runs (timestamps), so no job compares PDFs byte for byte. The maintainer
   regenerates the committed PDF with `make pdf` whenever the report changes.

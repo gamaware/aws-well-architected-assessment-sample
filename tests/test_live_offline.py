@@ -113,3 +113,10 @@ def test_a_title_reused_by_another_pillar_matches_within_its_own_pillar():
     assert missing == []
     selected = {u["QuestionId"]: u["SelectedChoices"] for u in tool.updates}
     assert selected == {"dev-integ": ["ops_version_control"], "rel-learn": []}
+
+
+def test_a_title_the_tool_lists_under_another_id_is_reported():
+    tool = FakeTool()
+    missing = roundtrip.record(tool, "wl-1", "wellarchitected", [item("OPS99-BP99", "Use version control", "met")])
+    assert missing == ["OPS99-BP99 Use version control (the Tool lists it as OPS05-BP01)"]
+    assert tool.updates == []

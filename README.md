@@ -49,13 +49,13 @@ The sample demonstrates:
   as AWS publishes them (`OPS06-BP01`, `[DL.ADS.2]`).
 - Findings traced to evidence: interviews, read-only exports and reviews, each with an ID the report cites.
 - Scoring, high-risk and medium-risk issue counts, backlog ranking and roadmap scheduling from written rules
-  ([methodology](docs/methodology.md), [ADRs](docs/adr/README.md)).
+  ([assessment method](docs/methodology.md), [ADRs](docs/adr/README.md)).
 - A report in which the scripts regenerate every number from the data and an independent test implementation
   recomputes it.
 
 ## Inspect the deliverable
 
-| Artifact | What it is |
+| Artifact | Contents |
 | --- | --- |
 | [`report/REPORT.md`](report/REPORT.md) | The client report: executive summary, scores, findings by pillar, backlog, roadmap, evidence register |
 | [`report/REPORT.pdf`](report/REPORT.pdf) | The same report as the client receives it |
@@ -161,7 +161,7 @@ Architecture decision records follow the *Fundamentals of Software Architecture*
 | `make verify` | CI and locally | The same command proves the report numbers follow from the data |
 | PDF build and evidence rerun | CI (shared `report`) | The report must render, and `make evidence` must reproduce `evidence/` |
 | markdownlint, link check, prose lint | CI (shared `lint-docs`) | The report and docs are the product |
-| actionlint, zizmor | CI (shared `lint-actions`) and pre-commit | Workflows stay least-privilege and pinned |
+| actionlint, zizmor | CI (shared `lint-actions`) and pre-commit | Workflows keep narrow token access and pinned actions |
 | gitleaks, detect-secrets | CI (shared `secrets`) and pre-commit | No credentials in a public repository |
 | Semgrep, Trivy, Checkov | CI (shared `security`) | Code and configuration scanning |
 | Account ID test | `tests/test_report.py` | Only AWS documentation example account IDs may appear |
@@ -186,7 +186,7 @@ Part of the [AWS DevOps portfolio](https://github.com/gamaware/aws-devops-portfo
 Well-Architected assessment" service:
 [DevOps and Well-Architected assessment on Upwork](https://www.upwork.com/freelancers/~014b3520cf9e140103). The
 method is the one Alex uses in audits for ITESO and freelance clients in Guadalajara. Contribution, conduct and
-support guidelines are inherited from [gamaware/.github](https://github.com/gamaware/.github); see also
+support guidelines come from [gamaware/.github](https://github.com/gamaware/.github); see also
 [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md).
 
 ## License
