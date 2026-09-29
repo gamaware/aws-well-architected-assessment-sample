@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from wa_assess import scoring
-from wa_assess.model import Item, Pillar
+from wa_assess.model import Assessment, Item, Pillar
 
 
 def item(item_id: str, question: str, status: str, risk: str | None = None) -> Item:
@@ -73,3 +75,15 @@ def test_score_rounds_half_up():
 def test_a_pillar_with_nothing_applicable_scores_zero_instead_of_failing():
     score = scoring.score_pillar(pillar(item("SEC01-BP01", "SEC01", "not_applicable")))
     assert (score.applicable, score.score_pct, score.maturity_level) == (0, 0, 1)
+
+
+def test_summary_totals_count_not_applicable_as_reviewed_but_leave_it_out_of_the_score():
+    reviewed = pillar(
+        item("SEC01-BP01", "SEC01", "met"),
+        item("SEC01-BP02", "SEC01", "not_met", "low"),
+        item("SEC02-BP01", "SEC02", "not_applicable"),
+    )
+    assessment = Assessment(root=Path("."), workload={}, evidence={}, pillars=(reviewed,))
+    totals = scoring.summarize(assessment)["framework"]
+    assert totals["best_practices"] == 3
+    assert totals["score_pct"] == 50  # (1 + 0) / 2 applicable

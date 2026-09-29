@@ -96,6 +96,16 @@ def _text(raw: dict, key: str) -> str:
     return " ".join(str(value).split()) if value is not None else ""
 
 
+def _ids(raw: dict, key: str) -> tuple[str, ...]:
+    """A list-of-IDs field as a tuple. A scalar is rejected: iterating "EV-01" would yield single characters."""
+    value = raw.get(key)
+    if value is None:
+        return ()
+    if not isinstance(value, list) or not all(isinstance(v, str) for v in value):
+        raise AssessmentError(f"{raw.get('id', '?')}: {key} must be a list of IDs, got {value!r}")
+    return tuple(value)
+
+
 def _item(raw: dict, pillar: str) -> Item:
     return Item(
         id=_text(raw, "id"),
@@ -104,12 +114,12 @@ def _item(raw: dict, pillar: str) -> Item:
         title=_text(raw, "title"),
         status=_text(raw, "status"),
         observation=_text(raw, "observation"),
-        evidence=tuple(raw.get("evidence") or ()),
+        evidence=_ids(raw, "evidence"),
         risk=raw.get("risk"),
         effort=raw.get("effort"),
         owner=_text(raw, "owner") or None,
         recommendation=_text(raw, "recommendation") or None,
-        depends_on=tuple(raw.get("depends_on") or ()),
+        depends_on=_ids(raw, "depends_on"),
     )
 
 

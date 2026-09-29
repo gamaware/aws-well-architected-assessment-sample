@@ -21,6 +21,8 @@ BLOCK = re.compile(
     r"(<!-- BEGIN GENERATED: (?P<name>[a-z0-9:-]+) -->\n)(?P<body>.*?)(<!-- END GENERATED: (?P=name) -->)",
     re.DOTALL,
 )
+# Any BEGIN or END comment, however its keyword is spelled, so a block whose markers were both mistyped still counts.
+MARKER = re.compile(r"<!--\s*(?:BEGIN|END)\b", re.IGNORECASE)
 RISK_LABEL = {"high": "High", "medium": "Medium", "low": "Low", "none": "None"}
 STATUS_LABEL = {"met": "Met", "partial": "Partial", "not_met": "Not met", "not_applicable": "Not applicable"}
 BACKLOG_COLUMNS = (
@@ -262,4 +264,11 @@ class Renderer:
 
     def report(self, text: str) -> str:
         """Return the report with every generated block re-rendered; prose outside the markers is kept."""
+        # Count stray markers outside well-formed blocks only: block bodies hold rendered assessment text,
+        # which may itself contain comment-like strings.
+        names = [m["name"] for m in BLOCK.finditer(text)]
+        if len(names) != len(set(names)):
+            raise ValueError("a GENERATED block name appears more than once; each block must be unique")
+        if MARKER.search(BLOCK.sub("", text)):
+            raise ValueError("a GENERATED marker is malformed or unpaired; fix it so the block is re-rendered")
         return BLOCK.sub(lambda m: m.group(1) + "\n" + self.block(m["name"]) + "\n" + m.group(4), text)
