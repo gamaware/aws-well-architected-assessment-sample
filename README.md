@@ -82,6 +82,8 @@ The client accepts the deliverable when:
 
 ## Architecture
 
+![Animated flow from assessment evidence to the roadmap](docs/diagrams/architecture-animated.svg)
+
 ![Harbor Goods production workload from shoppers to Aurora and a logistics partner, with the high-risk areas marked](docs/diagrams/assessed-workload-context.png)
 
 The context view shows the workload as assessed. Shoppers reach the storefront through Route 53, CloudFront and an
