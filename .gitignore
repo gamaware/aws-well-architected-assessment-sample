@@ -19,10 +19,6 @@ live-output/
 .firecrawl/
 *.sarif
 .DS_Store
-.claude-flow/
-.claude/proven-config*
-.claude/.proven-config-version
-.claude/settings.local.json
 build/
 
 # Vale packages (downloaded by vale sync)
