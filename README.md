@@ -15,7 +15,7 @@ risk-rated backlog, a 30/60/90-day roadmap and a client report, all generated fr
 ## Executive summary
 
 Harbor Goods, a fictional mid-size retailer, asked for a review of `storefront-orders`, the workload behind its
-online store. The team deploys about four times a week, and recovery from a bad release is slow. Releases reach
+online store. The team deploys several times a week, and recovery from a bad release is slow. Releases reach
 every user at once, nothing checks them after they land, CI deploys with a long-lived administrator key, and nobody
 has restored the orders database from a backup.
 

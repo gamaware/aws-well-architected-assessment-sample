@@ -152,3 +152,12 @@ def test_a_malformed_generated_marker_is_refused(repo_root, report):
     assert broken != report
     with pytest.raises(ValueError, match="malformed or unpaired"):
         renderer.report(broken)
+
+
+def test_a_block_with_both_markers_mistyped_is_refused(repo_root, report):
+    renderer = Renderer(load(repo_root / "data" / "synthetic"), repo_root)
+    broken = report.replace("<!-- BEGIN GENERATED: findings:security -->", "<!-- BEGIN GENERATE: findings:security -->")
+    broken = broken.replace("<!-- END GENERATED: findings:security -->", "<!-- END GENERATE: findings:security -->")
+    assert broken.count("GENERATE:") == 2
+    with pytest.raises(ValueError, match="malformed or unpaired"):
+        renderer.report(broken)

@@ -119,3 +119,4 @@ def test_a_title_the_tool_lists_under_another_id_is_reported():
     tool = FakeTool()
     missing = roundtrip.record(tool, "wl-1", "wellarchitected", [item("OPS99-BP99", "Use version control", "met")])
     assert missing == ["OPS99-BP99 Use version control (the Tool lists it as OPS05-BP01)"]
+    assert tool.updates == []

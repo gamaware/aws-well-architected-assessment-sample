@@ -78,17 +78,20 @@ def record(client, workload_id: str, lens: str, items: list) -> list[str]:
     # A title that is missing, or that appears under two questions of one pillar, cannot be matched safely.
     missing = [f"{item.id} {item.title}" for item in items if key_of(item) not in choices or key_of(item) in repeated]
     # A title that matches but sits under another ID in the Tool means the ID in data/synthetic is wrong.
-    missing += [
-        f"{item.id} {item.title} (the Tool lists it as {tool_ids[key_of(item)]})"
+    mismatched = [
+        item
         for item in items
         if key_of(item) in choices
         and key_of(item) not in repeated
         and tool_ids.get(key_of(item)) not in (None, item.id)
     ]
+    missing += [f"{item.id} {item.title} (the Tool lists it as {tool_ids[key_of(item)]})" for item in mismatched]
+    # A mismatched item is never recorded: the Tool choice it matched belongs to another best practice.
+    skipped = {item.id for item in mismatched}
     selected: dict[str, list[str]] = {}
     for item in items:
         match = choices.get(key_of(item))
-        if not match or key_of(item) in repeated:
+        if not match or key_of(item) in repeated or item.id in skipped:
             continue
         question_id, choice_id, _ = match
         selected.setdefault(question_id, [])
