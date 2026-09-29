@@ -82,7 +82,7 @@ The client accepts the deliverable when:
 
 ## Architecture
 
-![Animated flow of the Harbor Goods Well-Architected and DevOps assessment: evidence to roadmap](docs/diagrams/architecture-animated.svg)
+![Animated flow from assessment evidence to the roadmap](docs/diagrams/architecture-animated.svg)
 
 ![Harbor Goods production workload from shoppers to Aurora and a logistics partner, with the high-risk areas marked](docs/diagrams/assessed-workload-context.png)
 
