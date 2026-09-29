@@ -161,3 +161,11 @@ def test_a_block_with_both_markers_mistyped_is_refused(repo_root, report):
     assert broken.count("GENERATE:") == 2
     with pytest.raises(ValueError, match="malformed or unpaired"):
         renderer.report(broken)
+
+
+def test_marker_like_text_inside_a_generated_block_is_not_a_malformed_marker(repo_root, report):
+    renderer = Renderer(load(repo_root / "data" / "synthetic"), repo_root)
+    begin = "<!-- BEGIN GENERATED: findings:security -->\n"
+    assert begin in report
+    noisy = report.replace(begin, begin + "<!-- BEGIN note --> and <!-- END note -->\n", 1)
+    assert renderer.report(noisy) == renderer.report(report)

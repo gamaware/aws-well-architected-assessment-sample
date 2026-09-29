@@ -264,7 +264,8 @@ class Renderer:
 
     def report(self, text: str) -> str:
         """Return the report with every generated block re-rendered; prose outside the markers is kept."""
-        markers = len(MARKER.findall(text))
-        if markers != 2 * len(BLOCK.findall(text)):
+        # Count stray markers outside well-formed blocks only: block bodies hold rendered assessment text,
+        # which may itself contain comment-like strings.
+        if MARKER.search(BLOCK.sub("", text)):
             raise ValueError("a GENERATED marker is malformed or unpaired; fix it so the block is re-rendered")
         return BLOCK.sub(lambda m: m.group(1) + "\n" + self.block(m["name"]) + "\n" + m.group(4), text)
