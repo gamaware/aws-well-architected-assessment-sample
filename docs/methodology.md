@@ -16,8 +16,9 @@ this repository reproduces it. The client, Harbor Goods, is fictional.
   walks through every capability that applies.
 - **Best-practice IDs.** Framework IDs follow the `OPS05-BP01` pattern (pillar, question, best practice). DevOps
   Guidance IDs follow the `[DL.CI.1]` pattern (saga, capability, best practice); the data stores them without
-  brackets. The titles match the current AWS documentation word for word: `make test-live` checks the framework
-  titles against the AWS Well-Architected Tool, and review checks the DevOps Guidance titles.
+  brackets. The titles match the current AWS documentation word for word, except SEC03-BP02, which is phrased in
+  plain access terms. `make test-live` checks the framework titles against the AWS Well-Architected Tool and reports
+  SEC03-BP02 as unmatched; review checks the DevOps Guidance titles.
 
 ## How an engagement runs
 

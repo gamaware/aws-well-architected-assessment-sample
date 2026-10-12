@@ -14,3 +14,8 @@ The assessment is a sample deliverable, so each release is a numbered report rev
 - `report/REPORT.md` with generated tables, and `report/REPORT.pdf` rendered from it.
 - Tests that recompute the report numbers from the data, plus `make verify` and `make test-live`.
 - Assessment method, ADRs, diagrams, the social preview and CI calling the shared workflows pinned to a commit SHA.
+
+### Changed
+
+- Plain access wording for SEC03-BP02, account IDs replaced by placeholders, and no personal byline in the
+  repository or the PDF.
