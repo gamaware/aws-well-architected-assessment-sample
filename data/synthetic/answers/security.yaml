@@ -50,7 +50,7 @@ items:
       rotation reminder or automatic rotation.
   - id: SEC03-BP02
     question: SEC03
-    title: Grant least privilege access
+    title: Grant only the access each role needs
     status: not_met
     risk: high
     effort: M

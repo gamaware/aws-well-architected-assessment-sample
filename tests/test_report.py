@@ -21,8 +21,6 @@ from wa_assess.__main__ import main, outputs
 from wa_assess.model import load
 from wa_assess.render import Renderer
 
-ALLOWED_ACCOUNT_IDS = {"111122223333", "444455556666", "123456789012"}
-
 
 def table_after(text: str, header_start: str) -> list[list[str]]:
     """Rows of the first Markdown table whose header starts with `header_start`."""
@@ -131,7 +129,7 @@ def test_report_has_no_unfilled_placeholders_and_cites_known_evidence(repo_root,
     assert set(re.findall(r"EV-\d+", report)) <= known
 
 
-def test_only_documentation_example_account_ids_appear(repo_root):
+def test_no_account_ids_appear(repo_root):
     # Only files git tracks: gitignored local files (tool caches, live-test output) are never published.
     # /usr/bin/git exists on macOS and the Ubuntu CI runner; an absolute literal keeps ruff's S603/S607 satisfied.
     suffixes = {".md", ".yaml", ".yml", ".csv", ".json", ".sh", ".py", ".toml", ".drawio", ".svg", ".ini", ".cfg"}
@@ -143,7 +141,7 @@ def test_only_documentation_example_account_ids_appear(repo_root):
         if path.suffix not in suffixes or not path.is_file():
             continue
         found = set(re.findall(r"(?<!\d)\d{12}(?!\d)", path.read_text(encoding="utf-8", errors="ignore")))
-        assert found <= ALLOWED_ACCOUNT_IDS, f"{name}: {found - ALLOWED_ACCOUNT_IDS}"
+        assert not found, f"{name}: {found}"
 
 
 def test_a_malformed_generated_marker_is_refused(repo_root, report):

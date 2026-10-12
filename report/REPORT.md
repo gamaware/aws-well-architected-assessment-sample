@@ -1,14 +1,14 @@
 # Harbor Goods: AWS Well-Architected and DevOps assessment
 
 > **Fictional sample.** Harbor Goods and all data here are fictional. Each repository in this portfolio is a
-> separate engagement with Harbor Goods, a fictional mid-size retailer. Account IDs are AWS documentation examples.
+> separate engagement with Harbor Goods, a fictional mid-size retailer. Account IDs are shown as placeholders.
 > Every finding and figure in this report comes from the synthetic data in `data/synthetic/`.
 
 | Item | Detail |
 | --- | --- |
 | Client | Harbor Goods (fictional mid-size retailer) |
 | Workload | `storefront-orders`: storefront, order API and fulfilment worker |
-| Accounts | Production `111122223333`, staging `444455556666`, shared tooling `123456789012` (AWS documentation example IDs) |
+| Accounts | Production `<account-id>`, staging `<account-id>`, shared tooling `<account-id>` (placeholders) |
 | Region | `us-east-1` |
 | Lenses | AWS Well-Architected Framework (six pillars) and the DevOps lens (AWS Well-Architected DevOps Guidance) |
 | Access used | Read-only for infrastructure inspection; Tool record kept by the client |
@@ -280,7 +280,7 @@ variable, and the team rotated it by hand after it expired (INC-105).
 Recommendation: Move the partner token to Secrets Manager, inject it through the task definition `secrets` field, and
 set a rotation reminder or automatic rotation.
 
-#### SEC03-BP02 Grant least privilege access
+#### SEC03-BP02 Grant only the access each role needs
 
 Status: Not met. Risk: High. Effort: M. Owner: Platform lead. Backlog: HG-06. Evidence: EV-05, EV-08.
 
@@ -753,7 +753,7 @@ in [`evidence/backlog.csv`](../evidence/backlog.csv) for import into a tracker, 
 | 3 | HG-03 | REL09-BP04 | Perform periodic recovery of the data to verify backup integrity and processes | High | S | Platform lead | 30 |
 | 4 | HG-04 | REL13-BP01 | Define recovery objectives for downtime and data loss | High | S | Head of engineering | 30 |
 | 5 | HG-05 | OPS06-BP04 | Automate testing and rollback | High | M | Platform lead | 30 |
-| 6 | HG-06 | SEC03-BP02 | Grant least privilege access | High | M | Platform lead | 30 |
+| 6 | HG-06 | SEC03-BP02 | Grant only the access each role needs | High | M | Platform lead | 30 |
 | 7 | HG-07 | REL06-BP01 | Monitor all components for the workload (Generation) | High | M | Platform lead | 30 |
 | 8 | HG-08 | REL10-BP01 | Deploy the workload to multiple locations | High | M | Platform lead | 30 |
 | 9 | HG-09 | DL.ADS.2 | Implement automatic rollbacks for failed deployments | High | M | Platform lead | 30 |
@@ -816,7 +816,7 @@ depends on.
 - HG-03 Perform periodic recovery of the data to verify backup integrity and processes (REL09-BP04, High, S), Platform
   lead.
 - HG-04 Define recovery objectives for downtime and data loss (REL13-BP01, High, S), Head of engineering.
-- HG-06 Grant least privilege access (SEC03-BP02, High, M), Platform lead. After HG-02.
+- HG-06 Grant only the access each role needs (SEC03-BP02, High, M), Platform lead. After HG-02.
 - HG-07 Monitor all components for the workload (Generation) (REL06-BP01, High, M), Platform lead.
 - HG-08 Deploy the workload to multiple locations (REL10-BP01, High, M), Platform lead.
 - HG-10 Identify key performance indicators (OPS04-BP01, Medium, S), Head of engineering. Moved forward because later

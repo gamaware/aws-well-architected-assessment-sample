@@ -8,13 +8,13 @@ workload:
     orders; a fulfilment worker sends paid orders to a third-party logistics partner.
   environments:
     - name: production
-      account_id: "111122223333"
+      account_id: "YOUR_AWS_ACCOUNT_ID"
       region: us-east-1
     - name: staging
-      account_id: "444455556666"
+      account_id: "YOUR_AWS_ACCOUNT_ID"
       region: us-east-1
     - name: shared-tooling
-      account_id: "123456789012"
+      account_id: "YOUR_AWS_ACCOUNT_ID"
       region: us-east-1
   components:
     - Amazon Route 53 and Amazon CloudFront in front of an Application Load Balancer

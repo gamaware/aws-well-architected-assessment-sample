@@ -6,9 +6,10 @@ reviews:
   path_instructions:
     - path: "data/synthetic/**"
       instructions: >-
-        Fictional assessment answers for Harbor Goods. Best-practice IDs and titles must match the current AWS
-        Well-Architected Framework or DevOps Guidance exactly. Only AWS documentation example account IDs
-        (111122223333, 444455556666, 123456789012) and example.com domains. Every changed answer needs
+        Fictional assessment answers for Harbor Goods. Best-practice IDs must match the current AWS
+        Well-Architected Framework or DevOps Guidance exactly; titles follow the AWS wording, with access titles
+        phrased in plain access terms. No 12-digit account IDs (use the
+        YOUR_AWS_ACCOUNT_ID placeholder) and only example.com domains. Every changed answer needs
         `make evidence` so evidence/ and the report tables stay in step.
     - path: "scripts/**"
       instructions: >-
@@ -27,5 +28,5 @@ reviews:
         Must pass shellcheck and shellharden. Quote every variable; use arrays for word splitting.
     - path: "**/*.md"
       instructions: >-
-        Line length 120 (tables exempt), English, dateless, AWS documentation example IDs only, no marketing
+        Line length 120 (tables exempt), English, dateless, no 12-digit account IDs, no marketing
         adjectives.

@@ -10,7 +10,7 @@ risk-rated backlog, a 30/60/90-day roadmap and a client report, all generated fr
 ![DevOps and Well-Architected assessment](docs/assets/cover.png)
 
 > **Fictional sample.** Harbor Goods and all data here are fictional. Each repository in this portfolio is a
-> separate engagement with Harbor Goods, a fictional mid-size retailer. Account IDs are AWS documentation examples.
+> separate engagement with Harbor Goods, a fictional mid-size retailer. Account IDs are shown as placeholders.
 
 ## Executive summary
 
@@ -166,7 +166,7 @@ Architecture decision records follow the *Fundamentals of Software Architecture*
 | actionlint, zizmor | CI (shared `lint-actions`) and pre-commit | Workflows keep narrow token access and pinned actions |
 | gitleaks, detect-secrets | CI (shared `secrets`) and pre-commit | No credentials in a public repository |
 | Semgrep, Trivy, Checkov | CI (shared `security`) | Code and configuration scanning |
-| Account ID test | `tests/test_report.py` | Only AWS documentation example account IDs may appear |
+| Account ID test | `tests/test_report.py` | No 12-digit account ID appears; data uses `YOUR_AWS_ACCOUNT_ID` |
 
 Workflows start from `permissions: {}`, pin actions to full commit SHAs, and never receive cloud credentials.
 
@@ -187,7 +187,7 @@ Workflows start from `permissions: {}`, pin actions to full commit SHAs, and nev
 Part of the [AWS DevOps portfolio](https://github.com/gamaware/aws-devops-portfolio); it backs the "DevOps and
 Well-Architected assessment" service:
 [DevOps and Well-Architected assessment on Upwork](https://www.upwork.com/freelancers/~014b3520cf9e140103). The
-method is the one Alex uses in audits for ITESO and freelance clients in Guadalajara. Contribution, conduct and
+method is the same one used in client audits. Contribution, conduct and
 support guidelines come from [gamaware/.github](https://github.com/gamaware/.github); see also
 [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md).
 
