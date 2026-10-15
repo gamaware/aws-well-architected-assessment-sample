@@ -13,3 +13,4 @@ retailer Harbor Goods. When reviewing pull requests:
 - Flag suppressed lint rules; fix violations instead of suppressing them.
 - Workflows: `permissions: {}` at the top, SHA-pinned actions, no `pull_request_target`, no cloud credentials.
 - Shell scripts need a shebang, executable permission, and must pass shellcheck and shellharden.
+- Flag job-marketplace profile links, service offers and sales badges; none are allowed.
