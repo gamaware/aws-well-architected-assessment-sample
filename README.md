@@ -184,10 +184,7 @@ Workflows start from `permissions: {}`, pin actions to full commit SHAs, and nev
 
 ## Related work
 
-Part of the [AWS DevOps portfolio](https://github.com/gamaware/aws-devops-portfolio); it backs the "DevOps and
-Well-Architected assessment" service:
-[DevOps and Well-Architected assessment on Upwork](https://www.upwork.com/freelancers/~014b3520cf9e140103). The
-method is the same one used in client audits. Contribution, conduct and
+Part of the [AWS DevOps portfolio](https://github.com/gamaware/aws-devops-portfolio). Contribution, conduct and
 support guidelines come from [gamaware/.github](https://github.com/gamaware/.github); see also
 [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md).
 
