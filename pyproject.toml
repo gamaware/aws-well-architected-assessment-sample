@@ -8,8 +8,8 @@ requires-python = ">=3.12"
 dependencies = ["pyyaml==6.0.3"]
 
 [dependency-groups]
-dev = ["pytest==9.1.1", "ruff==0.16.9"]
-live = ["boto3==1.43.103"]
+dev = ["pytest==9.2.0", "ruff==0.17.4"]
+live = ["boto3==1.43.126"]
 
 [tool.uv]
 exclude-newer = "7 days"
